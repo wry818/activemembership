@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  database: activemembership_dev
+  host: localhost
+
+test:
+  adapter: postgresql
+  database: activemembership_test
+  host: localhost

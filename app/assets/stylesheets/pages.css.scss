@@ -1,0 +1,315 @@
+
+#access_code {
+	
+	color: white;
+	
+	#membership-loading {
+		background-color: rgb(22, 63, 109);
+	    height: 100px;
+	    width: 100%;
+		text-align: center;
+		
+		img {
+			margin-top: 20px;
+		}
+	}
+	
+	h1 {
+		text-align: center;
+		font-family: 'avenir_heavy';
+	}
+
+	.top_title {
+
+		font-size: 24px;
+	
+	    @media all and (min-width: 768px){
+			font-size: 50px;
+	    }
+	
+	}
+
+	.below_title {
+
+		font-size: 22px;
+	
+	    @media all and (min-width: 768px){
+			font-size: 46px;
+	    }
+	
+	}
+
+	h2 {
+	
+		font-family: 'avenir_roman';
+		font-size: 15px;
+	
+	    @media all and (min-width: 768px){
+			font-size: 20px;
+	    }
+	}
+
+	a {
+		color: white; 
+	}
+
+	a:hover {
+		color: white; 
+	}
+
+	a:focus {
+		color: white; 
+	}
+	
+	.input-group-addon {
+		font-weight: bold;
+		color: white;
+		border-radius: 0px;
+		border-color: rgb(16, 109, 212);
+		background-color: rgb(16, 109, 212);
+	
+	    @media all and (max-width: 768px){
+			padding-left: 5px;
+			padding-right: 5px;
+			font-size: 12px;
+	    }
+	
+	}
+	
+	.code-label {
+		font-family: "avenir_light";
+		text-align: center; 
+		width: 100%; 
+		padding-top: 6px; 
+		padding-bottom: 6px; 
+		background-color: rgb(255, 255, 255); 
+		border:1px solid #cccccc;
+		color: black;
+		
+		font-size: 14px;
+	
+	    @media all and (min-width: 768px){
+			font-size: 17px;
+			padding-top: 4px; 
+			padding-bottom: 4px; 
+	    }
+	}
+	
+	.form-control {
+		font-family: "avenir_light";
+		border-radius: 0px;
+		text-align: center;
+	
+		font-size: 14px;
+	
+	    @media all and (min-width: 768px){
+			font-size: 17px;
+	    }
+	
+	}
+
+	.btn-copy {
+		font-family: "Montserrat";
+		font-weight: bold;
+		color: white;
+		border-radius: 0px;
+		border-color: rgb(16, 109, 212);
+		background-color: rgb(16, 109, 212);
+	
+		&:hover {
+			color: white;
+		}
+	
+		&:active {
+			color: white;
+		}
+	
+	    &:focus {
+	  	  	color: white;
+	    }
+	
+	}
+	
+	.container {
+	    @media all and (max-width: 768px){
+			padding-left: 0px;
+			padding-right: 0px;
+	    }
+	}
+
+	#membership-products {
+	
+		margin-top: 30px;
+	
+		.product {
+			background-color: rgb(22, 63, 109);
+			margin-bottom: 20px;
+		
+			.row {
+				padding-top: 15px;
+				padding-bottom: 15px;
+			
+				.title {
+				
+					font-family: 'avenir_black';
+					font-size: 17px;
+				
+				    @media all and (min-width: 768px){
+						font-size: 22px;
+				    }
+				
+				}
+			
+				.desc {
+				
+					font-family: 'avenir_heavy';
+					font-size: 15px;
+				
+				    @media all and (min-width: 768px){
+						font-size: 17px;
+				    }
+				
+				}
+			
+				.product-info {
+					text-align: center;
+			
+			        @media all and (min-width: 768px){
+				
+						text-align: left;
+						padding-left: 15px;
+					
+			        }
+				
+				}
+			
+				table {
+					width: 100%; 
+					margin-top: 10px;
+				
+					.access-title {
+					
+						font-family: 'avenir_heavy';
+						text-align: right;
+						font-size: 15px;
+					
+				        @media all and (min-width: 768px){
+				
+							font-size: 17px;
+					
+				        }
+					
+					}
+				
+					.control {
+						width: 220px; 
+					
+				        @media all and (min-width: 768px){
+				
+							width: 290px; 
+					
+				        }
+					
+						padding-left: 20px;
+					
+						.input-group {
+							width: 160px;
+						
+					        @media all and (min-width: 768px){
+				
+								width: 250px;
+					
+					        }
+						
+						}
+					
+					}
+				
+				}
+			
+			}
+		
+		}
+	
+	}
+
+	.note {
+		font-family: 'avenir_roman';
+		text-align: left;
+		font-size: 11px;
+	}
+
+	.row {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	#how-to-activate {
+	
+		margin-top: 30px;
+	
+		.product {
+			background-color: rgb(22, 63, 109);
+			margin-bottom: 20px;
+		
+			.row {
+				padding-top: 15px;
+				padding-bottom: 15px;
+			
+				.title {
+				
+					font-family: 'avenir_black';
+					font-size: 17px;
+				
+			        @media all and (min-width: 768px){
+				
+						font-size: 22px;
+							
+			        }
+				
+				}
+			
+				ol {
+				
+					font-family: 'avenir_roman';
+					text-align: left;
+					font-size: 16px;
+					padding-left: 20px;
+				
+			        @media all and (min-width: 768px){
+				
+						font-size: 22px;
+							
+			        }
+				
+					a {
+						text-decoration: underline;
+					}
+				
+				}
+			
+			}
+		
+		}
+	
+	}
+}
+
+//#container {
+//	width: 100%;
+//	text-align: center;
+//	display: block;
+//	//margin-top: 20px;
+//}
+
+
+
+
+
+
+
+
+
+
+
+

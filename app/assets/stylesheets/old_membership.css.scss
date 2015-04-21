@@ -1,0 +1,259 @@
+#container {
+	
+	width: 100%;
+	text-align: center; 
+	display: block;
+	//margin-top: 20px;
+	
+	input {
+		margin: 0px; 
+	    padding: 4px; 
+	    border-radius: 1px; 
+	    border: 1px solid rgb(204, 204, 204); 
+	    width: 100%; 
+	    color: rgb(34, 34, 34); 
+	    font-size: 13px; 
+	    vertical-align: top; 
+	    display: inline-block; 
+	    max-width: 100%; 
+	    box-sizing: border-box; 
+	    -moz-box-sizing: border-box;
+	}
+
+	input[type=text] {
+		padding: 4px; margin-right: 0px;
+	}
+
+	input[type=submit] {
+		width: auto; cursor: pointer; max-width: none;
+	}
+
+	.login-container {
+		margin: 20px 0px 30px 0px; 
+		padding: 0px; 
+		color: rgb(149, 167, 183); 
+		max-width: 250px;
+	}
+	
+	.dialog-heading {
+		color: rgb(49, 55, 61); padding-top: 90px; font-family: "ProximaNovaLight", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 30px;
+	}
+
+	.dialog-subheading {
+		//color: rgb(149, 167, 183);
+	    //font-size: 13px;
+		//font-weight: normal;
+	}
+
+	.dialog-input-container {
+		position: relative;
+	}
+	.dialog-input-container label {
+		margin: 0px;
+	}
+
+	.dialog-input {
+	    color: rgb(127, 127, 130);
+		background-color: rgb(248, 248, 250);
+	    border:1px solid #E5E5E5;
+	    padding: 15px 24px 15px 45px !important;
+	    font-size: 13px;
+	    font-weight: normal;
+	    //font-style: italic;
+	}
+
+	:invalid.dialog-input {
+		box-shadow: none;
+	}
+
+	.dialog-label {
+		margin: 0px; left: 70px; top: 26px; color: rgb(149, 167, 183); font-family: "ProximaNovaLight", "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; display: none; position: absolute; cursor: text; -webkit-transition: all 0.1s;
+	}
+
+	.is-visible.dialog-label {
+		display: block;
+	}
+
+	.dialog-ico-email {
+		left: 15px; 
+		top: 57%; 
+		width: 23px; 
+		height: 18px; 
+		margin-top: -12px; 
+		display: inline-block; 
+		position: absolute; 
+		background-size: cover;
+	}
+
+	.dialog-ico {
+		left: 15px; 
+		top: 50%; 
+		width: 19px; 
+		height: 23px; 
+		margin-top: -12px; 
+		display: inline-block; 
+		position: absolute; 
+		background-size: cover;
+	}
+
+	.dialog-ico-tooltip {
+		left: 0px; 
+		top: 50%; 
+		width: 22px; 
+		height: 21px; 
+		margin-top: -12px; 
+		display: inline-block; 
+		position: absolute; 
+		background-size: cover;
+	}
+
+	.ico-email {
+		background: image-url('email_icon.png') no-repeat;
+	}
+
+	.ico-password {
+		background: image-url('darkblue_lock.png') no-repeat;
+	}
+
+	.ico-forgot-password {
+		background: image-url('white_tooltip.png') no-repeat;
+	}
+
+	.forgot-password-container {
+		top: 50%; right: 30px; margin-top: -10px; position: absolute;
+	}
+
+	.forgot-password {
+		width: 20px; height: 20px; display: block; opacity: 0.7;
+	}
+
+	.forgot-password:hover {
+		opacity: 1;
+	}
+
+	.dialog-btn {
+		font-family: "Montserrat", "Open Sans", sans-serif;
+		background-color: rgb(245, 117, 12); 
+	    padding: 12px 24px 12px 0px; 
+	    //border-radius: 0px 0px 2px 2px; 
+	    border: currentColor;
+	    width: 100% !important;
+	    color: rgb(255, 255, 255); 
+	    font-size: 15px; 
+	    display: inline-block; 
+	    cursor: pointer; 
+	}
+
+	.dialog-btn:hover {
+		background-color: rgb(233, 111, 10);
+	}
+
+	.dialog-btn:focus {
+		background-color: rgb(233, 111, 10);
+	}
+
+	.dialog-btn:disabled {
+		background-color: rgb(241, 141, 55);
+	}
+
+	.more-left {
+		background-position-x: 87%; 
+		background-position-y: center; 
+		background-image: url("//cdn.shopify.com/s/files/1/0595/0057/t/5/assets/pmpp-btn-arrow.svg?14733249305789905177"); 
+		background-repeat: no-repeat;
+	}
+
+	.more-left-login {
+		background-position-x: 70%; 
+		background-position-y: center; 
+		background-image: url("//cdn.shopify.com/s/files/1/0595/0057/t/5/assets/pmpp-btn-arrow.svg?14733249305789905177"); 
+		background-repeat: no-repeat;
+	}
+
+	.tooltip {
+		position: relative !important;
+	}
+	.tooltip::before {
+		border: 4px solid transparent; left: 50%; width: 0px; height: 0px; margin-left: -4px; display: none; position: absolute; content: "";
+	}
+	.is-active.tooltip::before {
+		display: block;
+	}
+	.tooltip-top::before {
+		bottom: 100%; border-top-color: rgb(25, 25, 25);
+	}
+	.tooltip-bottom::before {
+		top: 100%; bottom: auto; border-bottom-color: rgb(25, 25, 25);
+	}
+	.tooltip-container {
+		left: 50%; line-height: 18px; display: none; position: absolute; z-index: 50;
+	}
+	.is-active.tooltip .tooltip-container {
+		display: block;
+	}
+	.tooltip-top > .tooltip-container {
+		bottom: calc(100% + 8px);
+	}
+	.tooltip-bottom > .tooltip-container {
+		top: calc(100% + 8px);
+	}
+	.tooltip-left-align > .tooltip-container {
+		left: 0px;
+	}
+	.tooltip-right-align > .tooltip-container {
+		left: auto; right: 0px;
+	}
+	.tooltip-sidebar-need-help.tooltip-container {
+		margin-left: 10px;
+	}
+	.tooltip-sidebar-announcements.tooltip-container {
+		margin-right: 10px;
+	}
+	.tooltip-label {
+		padding: 4px 8px; border-radius: 3px; left: -50%; color: rgb(255, 255, 255); text-indent: 0px; font-size: 11px; font-weight: normal; display: block; white-space: nowrap; position: relative; text-shadow: none; background-color: rgb(25, 25, 25);
+	}
+	.tooltip-left-align .tooltip-label {
+		left: 0px;
+	}
+	.tooltip-right-align .tooltip-label {
+		left: auto; right: 0px;
+	}
+	.tooltip-wordy .tooltip-label {
+		white-space: normal; min-width: 180px;
+	}
+	.tooltip-right-aligned .tooltip-container {
+		right: 0px;
+	}
+	.tooltip-right-aligned .tooltip-label {
+		right: 0px;
+	}
+	.tooltip-right-aligned .tooltip-label::before {
+		left: auto; right: 11px;
+	}
+	.tooltip-left-aligned .tooltip-container {
+		left: 0px; right: auto;
+	}
+	.tooltip-left-aligned .tooltip-label {
+		left: 0px; right: auto;
+	}
+	.tooltip-left-aligned .tooltip-label::before {
+		left: 8px; margin-left: 0px;
+	}
+	a.tooltip .tooltip-label {
+		text-decoration: none;
+	}
+	a.is-active.tooltip .tooltip-label {
+		text-decoration: none;
+	}
+
+	.tooltipsy
+	    {
+	        padding: 10px;
+	        max-width: 200px;
+	        color: #303030;
+	        background-color: #f5f5b5;
+	        border: 1px solid #deca7e;
+	    }
+}
+
+

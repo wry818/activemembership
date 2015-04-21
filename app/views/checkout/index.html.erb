@@ -1,0 +1,425 @@
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+<script>
+
+	var state_provinces=[];
+	var country_id = "US";
+	var state_province_abbrev = "";
+	
+	state_provinces.push({id:0, name: "----- Please select a state -----", abbrev: "", country_id: "US"});
+	state_provinces.push({id:1, name: "Alabama", abbrev: "AL", country_id: "US"});
+	state_provinces.push({id:2, name: "Alaska", abbrev: "AK", country_id: "US"});
+	state_provinces.push({id:3, name: "Arizona", abbrev: "AZ", country_id: "US"});
+	state_provinces.push({id:4, name: "Arkansas", abbrev: "AR", country_id: "US"});
+	state_provinces.push({id:5, name: "California", abbrev: "CA", country_id: "US"});
+	state_provinces.push({id:6, name: "Colorado", abbrev: "CO", country_id: "US"});
+	state_provinces.push({id:7, name: "Connecticut", abbrev: "CT", country_id: "US"});
+	state_provinces.push({id:8, name: "Delaware", abbrev: "DE", country_id: "US"});
+	state_provinces.push({id:9, name: "District of Columbia", abbrev: "DC", country_id: "US"});
+	state_provinces.push({id:10, name: "Florida", abbrev: "FL", country_id: "US"});
+	state_provinces.push({id:11, name: "Georgia", abbrev: "GA", country_id: "US"});
+	state_provinces.push({id:12, name: "Hawaii", abbrev: "HI", country_id: "US"});
+	state_provinces.push({id:13, name: "Idaho", abbrev: "ID", country_id: "US"});
+	state_provinces.push({id:14, name: "Illinois", abbrev: "IL", country_id: "US"});
+	state_provinces.push({id:15, name: "Indiana", abbrev: "IN", country_id: "US"});
+	state_provinces.push({id:16, name: "Iowa", abbrev: "IA", country_id: "US"});
+	state_provinces.push({id:17, name: "Kansas", abbrev: "KS", country_id: "US"});
+	state_provinces.push({id:18, name: "Kentucky", abbrev: "KY", country_id: "US"});
+	state_provinces.push({id:19, name: "Louisiana", abbrev: "LA", country_id: "US"});
+	state_provinces.push({id:20, name: "Maine", abbrev: "ME", country_id: "US"});
+	state_provinces.push({id:21, name: "Maryland", abbrev: "MD", country_id: "US"});
+	state_provinces.push({id:22, name: "Massachusetts", abbrev: "MA", country_id: "US"});
+	state_provinces.push({id:23, name: "Michigan", abbrev: "MI", country_id: "US"});
+	state_provinces.push({id:24, name: "Minnesota", abbrev: "MN", country_id: "US"});
+	state_provinces.push({id:25, name: "Mississippi", abbrev: "MS", country_id: "US"});
+	state_provinces.push({id:26, name: "Missouri", abbrev: "MO", country_id: "US"});
+	state_provinces.push({id:27, name: "Montana", abbrev: "MT", country_id: "US"});
+	state_provinces.push({id:28, name: "Nebraska", abbrev: "NE", country_id: "US"});
+	state_provinces.push({id:29, name: "Nevada", abbrev: "NV", country_id: "US"});
+	state_provinces.push({id:30, name: "New Hampshire", abbrev: "NH", country_id: "US"});
+	state_provinces.push({id:31, name: "New Jersey", abbrev: "NJ", country_id: "US"});
+	state_provinces.push({id:32, name: "New Mexico", abbrev: "NM", country_id: "US"});
+	state_provinces.push({id:33, name: "New York", abbrev: "NY", country_id: "US"});
+	state_provinces.push({id:34, name: "North Carolina", abbrev: "NC", country_id: "US"});
+	state_provinces.push({id:35, name: "North Dakota", abbrev: "ND", country_id: "US"});
+	state_provinces.push({id:36, name: "Ohio", abbrev: "OH", country_id: "US"});
+	state_provinces.push({id:37, name: "Oklahoma", abbrev: "OK", country_id: "US"});
+	state_provinces.push({id:38, name: "Oregon", abbrev: "OR", country_id: "US"});
+	state_provinces.push({id:39, name: "Pennsylvania", abbrev: "PA", country_id: "US"});
+	state_provinces.push({id:40, name: "Rhode Island", abbrev: "RI", country_id: "US"});
+	state_provinces.push({id:41, name: "South Carolina", abbrev: "SC", country_id: "US"});
+	state_provinces.push({id:42, name: "South Dakota", abbrev: "SD", country_id: "US"});
+	state_provinces.push({id:43, name: "Tennessee", abbrev: "TN", country_id: "US"});
+	state_provinces.push({id:44, name: "Texas", abbrev: "TX", country_id: "US"});
+	state_provinces.push({id:45, name: "Utah", abbrev: "UT", country_id: "US"});
+	state_provinces.push({id:46, name: "Vermont", abbrev: "VT", country_id: "US"});
+	state_provinces.push({id:47, name: "Virginia", abbrev: "VA", country_id: "US"});
+	state_provinces.push({id:48, name: "Washington", abbrev: "WA", country_id: "US"});
+	state_provinces.push({id:49, name: "West Virginia", abbrev: "WV", country_id: "US"});
+	state_provinces.push({id:50, name: "Wisconsin", abbrev: "WI", country_id: "US"});
+	state_provinces.push({id:51, name: "Wyoming", abbrev: "WY", country_id: "US"});
+	state_provinces.push({id:52, name: "Other", abbrev: "OT", country_id: "US"});
+	state_provinces.push({id:53, name: "GUAM", abbrev: "GU", country_id: "US"});
+	state_provinces.push({id:54, name: "Armed Forces Africa (AE)", abbrev: "AE", country_id: "US"});
+	state_provinces.push({id:55, name: "Armed Forces Canada (AE)", abbrev: "AE", country_id: "US"});
+	state_provinces.push({id:56, name: "Armed Forces Europe (AE)", abbrev: "AE", country_id: "US"});
+	state_provinces.push({id:57, name: "Armed Forces Middle East (AE)", abbrev: "AE", country_id: "US"});
+	state_provinces.push({id:58, name: "Armed Forces Americas except Canada (AA)", abbrev: "AA", country_id: "US"});
+	state_provinces.push({id:59, name: "Armed Forces Pacific (AP)", abbrev: "AP", country_id: "US"});
+	state_provinces.push({id:60, name: "Puerto Rico", abbrev: "PR", country_id: "US"});
+	state_provinces.push({id:61, name: "Virgin Islands", abbrev: "VI", country_id: "US"});
+	state_provinces.push({id:0, name: "----- Please select a province -----", abbrev: "", country_id: "CA"});
+	state_provinces.push({id:62, name: "Ontario", abbrev: "ON", country_id: "CA"});
+	state_provinces.push({id:63, name: "Alberta", abbrev: "AB", country_id: "CA"});
+	state_provinces.push({id:64, name: "British Columbia", abbrev: "BC", country_id: "CA"});
+	state_provinces.push({id:65, name: "Manitoba", abbrev: "MB", country_id: "CA"});
+	state_provinces.push({id:66, name: "New Brunswick", abbrev: "NB", country_id: "CA"});
+	state_provinces.push({id:67, name: "Newfoundland and Labrador", abbrev: "NL", country_id: "CA"});
+	state_provinces.push({id:68, name: "Nova Scotia", abbrev: "NS", country_id: "CA"});
+	state_provinces.push({id:69, name: "Northwest Territories", abbrev: "NT", country_id: "CA"});
+	state_provinces.push({id:70, name: "Nunavut", abbrev: "NU", country_id: "CA"});
+	state_provinces.push({id:71, name: "Prince Edward Island", abbrev: "PE", country_id: "CA"});
+	state_provinces.push({id:72, name: "Quebec", abbrev: "QC", country_id: "CA"});
+	state_provinces.push({id:73, name: "Saskatchewan", abbrev: "SK", country_id: "CA"});
+	state_provinces.push({id:74, name: "Yukon", abbrev: "YT", country_id: "CA"});		
+	
+	$(document).ready(function () {
+		
+		var hidValue = $('#hidvalue').val();
+		var value = $.parseJSON(hidValue);
+	
+		if (value.code == 200) {
+		
+			$('#btnContinue').attr('disabled', false);
+			BindProducts();
+			BindCustomer();
+			
+		} else if (value.code == 404) {
+			
+			$.show_error("Product does not exist.");
+		
+		} else {
+		
+			$.show_error("Unfortunately we were not able to process your request at this time, please try later.");
+		
+		}
+
+		bind_state_province(country_id);
+		
+		$("#country_id").change(function(){
+			bind_state_province($(this).val());
+		});
+		
+	    $("#btnContinue").click(function (event) {
+			
+			if ($("#checkout_form").valid()) {
+				
+				var geocoder = new google.maps.Geocoder();
+				var zipcode = $("#checkout_zipcode").val();
+	            geocoder.geocode({ 'address': zipcode }, function (results, status) {
+				
+	                if (status == google.maps.GeocoderStatus.OK) {
+
+						var selected_province_code = $("#state_province_id").val();
+						var isvalid = false;
+						
+						for (var i = 0; i < results[0].address_components.length; i++) {
+							
+							var address_component = results[0].address_components[i];
+							
+							if (address_component.types[0] == "administrative_area_level_1") {
+								
+								if (address_component.short_name == selected_province_code) {
+									isvalid = true;
+								} else {
+									isvalid = false;
+								}
+								
+								break;
+								
+							}
+		
+						}
+						
+						if (isvalid) {
+
+							var error = $("#zipcode_province_error");
+							error.remove();
+							
+							var customer = new Object();
+
+							customer.email = $("#checkout_email").val();
+
+							var shipping_address = new Object();
+							customer.shipping_address = shipping_address;
+
+							shipping_address.firstName = $("#checkout_first_name").val();
+							shipping_address.lastName = $("#checkout_last_name").val();
+							shipping_address.company = $("#checkout_company").val();
+							shipping_address.address1 = $("#checkout_address1").val();
+							shipping_address.address2 = $("#checkout_address2").val();
+							shipping_address.city = $("#checkout_city").val();
+							shipping_address.zip = $("#checkout_zipcode").val();
+							shipping_address.country = $("#country_id").val();
+
+							if (shipping_address.country == "US") {
+								shipping_address.translated_country_name = "United State";
+							} else {
+								shipping_address.translated_country_name = "canada";
+							}
+
+							shipping_address.province_code = $("#state_province_id").val();
+							shipping_address.phone = $("#checkout_phone").val();
+
+							var billing_address = new Object();
+							customer.billing_address = billing_address;
+
+							billing_address.firstName = $("#checkout_first_name").val();
+							billing_address.lastName = $("#checkout_last_name").val();
+							billing_address.company = $("#checkout_company").val();
+							billing_address.address1 = $("#checkout_address1").val();
+							billing_address.address2 = $("#checkout_address2").val();
+							billing_address.city = $("#checkout_city").val();
+							billing_address.zip = $("#checkout_zipcode").val();
+							billing_address.country = $("#country_id").val();
+
+							if (billing_address.country == "US") {
+								billing_address.translated_country_name = "United State";
+							} else {
+								billing_address.translated_country_name = "canada";
+							}
+
+							billing_address.province_code = $("#state_province_id").val();
+							billing_address.phone = $("#checkout_phone").val();
+
+							var customerData = JSON.stringify(customer);
+							sessionStorage.setItem(sessionStorageManager.CustomerData, customerData);
+
+							window.location.href = "/checkout-payment/<%=@product_id%>/<%=@plan%>";
+							
+						} else {
+						
+							$("#checkout_zipcode").closest('.field').addClass('has-error');
+						
+							var error = "<label id='zipcode_province_error' class='error'>is not valid for " + $("#state_province_id option:selected").text() + " </label>";
+							$(error).insertAfter($("#checkout_zipcode"));
+						
+						}
+
+	                } else {
+					
+						$("#checkout_zipcode").closest('.field').addClass('has-error');
+					
+						var error = "<label id='zipcode_province_error' class='error'>is not valid for " + $("#state_province_id option:selected").text() + " </label>";
+						$(error).insertAfter($("#checkout_zipcode"));
+					
+	                }
+	            });
+
+			}
+			
+	    });
+		
+	});
+
+	function BindProducts() {
+		
+		var hidValue = $('#hidvalue').val();
+		var product = $.parseJSON(hidValue).data;
+		var variant = product.variants[0];
+		var images = product.images;
+		
+		$(".product__info__name strong").text(product.title);
+		$(".product__info__description").text(variant.title);
+		$(".product__price").text("$ " + variant.price);
+		$(".line__price").text("$ " + variant.price);
+		$(".payment-due__price").text("$ " + variant.price);
+		
+		if (images != null && images.length > 0) {
+			$(".product__image").attr("src", images[0].src);
+		} else {
+			$(".product__image").hide();
+		}
+		
+		var productData = new Object();
+	
+		productData.title = product.title;
+		productData.description = variant.title;
+		productData.price = variant.price;
+		productData.variant_id = variant.id;
+		productData.type = product.product_type;
+		
+		if (images != null && images.length > 0) {
+			productData.src = images[0].src;
+		}
+		
+		sessionStorage.setItem(sessionStorageManager.ProductInfo, JSON.stringify(productData));
+			
+	}
+	
+	function BindCustomer() {
+		
+		var customerData = sessionStorage.getItem(sessionStorageManager.CustomerData);
+		
+		if (customerData != null) {
+			
+			var customer = $.parseJSON(customerData);
+			
+			country_id = customer.shipping_address.country;
+			state_province_abbrev = customer.shipping_address.province_code;
+			
+			$("#checkout_email").val(customer.email);
+			$("#checkout_first_name").val(customer.shipping_address.firstName);
+			$("#checkout_last_name").val(customer.shipping_address.lastName);
+			$("#checkout_company").val(customer.shipping_address.company);
+			$("#checkout_address1").val(customer.shipping_address.address1);
+			$("#checkout_address2").val(customer.shipping_address.address2);
+			$("#checkout_city").val(customer.shipping_address.city);
+			$("#checkout_zipcode").val(customer.shipping_address.zip);
+			$("#country_id").val(customer.shipping_address.country);
+			// $("#state_province_id").val(customer.shipping_address.province_code);
+			$("#checkout_phone").val(customer.shipping_address.phone);
+			
+		}
+		
+	}
+	
+	function bind_state_province(country_id){
+
+		$("#state_province_id").empty();
+		
+		$(state_provinces).each(function(){
+			
+			if (this.country_id.toString() == country_id.toString())
+			{
+				var option="<option value='" + this.abbrev + "'";
+		
+				if (this.abbrev == state_province_abbrev)
+					option+=" selected";
+		
+				option+=">" + this.name + "</option>";
+			
+				$(option).appendTo($("#state_province_id"));
+			}
+			
+		});
+	
+	}
+		
+</script>
+			
+<div id="checkout" class="row">
+	<div class="col-lg-6">
+		<div id="contact-information" class="section">
+			<div class="section__header">
+				<h3>
+					Customer Information
+				</h3>
+			</div>
+			<form id="checkout_form" action="/checkout/continue" method="post">
+				<div class="fieldset">
+					<div class="field">
+						<label for="checkout_email">
+							Email
+						</label>
+						<input name="checkout[email]" id="checkout_email" spellcheck="false" type="email" size="30" placeholder="Email" />
+					</div>
+				</div>
+				<h5>
+					Shipping Address
+				</h5>
+				<div class="fieldset" id="billing-address">
+					<div class="field">
+						<label for="checkout_first_name">
+							First Name
+						</label>
+						<input name="checkout[first_name]" id="checkout_first_name" spellcheck="false" type="text" size="30" placeholder="First Name" />
+					</div>
+					<div class="field">
+						<label for="checkout_last_name">
+							Last Name
+						</label>
+						<input name="checkout[last_name]" id="checkout_last_name" spellcheck="false" type="text" size="30" placeholder="Last Name" />
+					</div>
+					<div class="field">
+						<label for="checkout_company">
+							Company
+						</label>
+						<input name="checkout[company]" id="checkout_company" spellcheck="false" type="text" size="30" placeholder="Company (optional)" />
+					</div>
+					<div class="field">
+						<label for="checkout_address">
+							Address
+						</label>
+						<input name="checkout[address]" id="checkout_address1" spellcheck="false" type="text" size="30" placeholder="Address" />
+					</div>
+					<div class="field">
+						<label for="checkout_address2">
+							Apt, suit, etc.
+						</label>
+						<input name="checkout[address2]" id="checkout_address2" spellcheck="false" type="text" size="30" placeholder="Apt, suit, etc. (optional)" />
+					</div>
+					<div class="field">
+						<label for="checkout_city">
+							City
+						</label>
+						<input name="checkout[city]" id="checkout_city" spellcheck="false" type="text" size="30" placeholder="City" />
+					</div>
+					<div class="field">
+						<label for="checkout_country">
+							Country
+						</label>
+						<select autocomplete="shipping country" id="country_id" name="checkout[country]" size="1">
+							<option selected="selected" value="US">
+								United States
+							</option>
+							<option disabled="disabled" value="---">
+								---
+							</option>
+							<option value="US">
+								United States
+							</option>
+							<option value="CA">
+								Canada
+							</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="checkout_state">
+							State
+						</label>
+						<select autocomplete="shipping country" id="state_province_id" name="checkout[state]" size="1">
+						</select>
+					</div>
+					<div class="field">
+						<label for="checkout_zipcode">
+							Zip Code
+						</label>
+						<input name="checkout[zipcode]" id="checkout_zipcode" spellcheck="false" type="text" size="30" placeholder="Zip Code" />
+					</div>
+					<div class="field">
+						<label for="checkout_phone">
+							Phone
+						</label>
+						<input name="checkout[phone]" id="checkout_phone" spellcheck="false" type="tel" size="30" placeholder="Phone" />
+					</div>
+				</div>
+				<div class="call-to-action">
+					<!-- <input name="commit" class="btn" type="submit" value="Continue" /> -->
+					<input id="btnContinue" class="btn" type="button" value="Continue" disabled="disabled" />
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="col-lg-5 col-order-summary">
+		<%= render 'order_summary' %>
+	</div>	
+</div>
+<div>
+	<input id="hidvalue" type="hidden" value="<%=@result%>" />
+	<input id="hidProductid" type="hidden" value="<%=@product_id%>" />
+</div>
+
+
+
+
+

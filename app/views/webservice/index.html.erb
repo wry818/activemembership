@@ -1,0 +1,384 @@
+<script>
+
+  $(document).ready(function () {
+    
+    $('.hastip').tooltipsy();
+    
+	var hidValue = $('#hidvalue').val();
+	var value = $.parseJSON(hidValue);
+	
+	if (value.code == 200) {
+		
+		FilterProducts();
+		
+		var data = $.parseJSON(hidValue).data;
+		$("#txtEmail").val(data.customer.email);
+		
+	} else if (value.code == 404) {
+		
+		$.show_error("Order does not exist.");
+		$.hide_loading();
+		
+	} else {
+		
+		$.show_error("Unfortunately we were not able to process your request at this time, please try later.");
+		$.hide_loading();
+		
+	}
+
+    $("#btnActiveMembership").click(function (event) {
+
+      if (Validate()) {
+
+		$.hide_error();
+		$.show_loading();
+		
+        var $button = $(this);
+        $button.prop('disabled', true);
+		
+		var hidValue = $('#hidvalue').val();
+		var data = $.parseJSON(hidValue).data;
+		var product_types = $.parseJSON($('#hidproducttypes').val());
+		
+		var customerData = new Object();
+        customerData.password = $("#txtPassword").val();
+        customerData.eMailAddress = $("#txtEmail").val();
+        customerData.firstName = data.customer.first_name;
+        customerData.lastName = data.customer.last_name;
+        customerData.addr1 = data.customer.default_address.address1;
+        customerData.addr2 = data.customer.default_address.address2;
+        customerData.city = data.customer.default_address.city;
+        customerData.state = data.customer.default_address.province_code;
+        customerData.zip = data.customer.default_address.zip;
+        customerData.phone = data.customer.default_address.phone;
+		customerData.order_id = $('#hidOrderid').val();
+		
+		var products = new Array();
+		customerData.products = products;
+		
+		var line_items = data.line_items;
+		for (var i = 0; i < line_items.length; i++) {
+
+			for (var j = 0; j < product_types.length; j++) {
+
+				if (line_items[i].product_id == product_types[j].id) {
+
+					if(product_types[j].product_type == "Digital Membership" || product_types[j].product_type == "Book") {
+
+						var product = new Object();
+						product.sku = line_items[i].sku;
+						product.quantity = line_items[i].quantity;
+						product.id = line_items[i].product_id;
+						product.title = line_items[i].title;
+			
+						if (i == 0) {
+							product.is_first = true
+						} else {
+							product.is_first = false
+						}
+			
+						products.push(product);
+						
+					}
+
+				}
+
+			}
+			
+		}
+		
+        $.ajax({
+          type: "POST",
+          //dataType: 'json',
+          data: customerData,
+          beforeSend: function(jqXHR, settings) {
+            jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+          },
+          url: "ajax/register",
+          success: function (data, status) {
+			  
+            if (data.code == 200) {
+				
+				$.hide_loading();
+				if ($.is_in_frame()) {
+					 window.top.location.href = "<%=Rails.configuration.shopify_activation_url%>";
+				} else {
+					 window.location.href = "<%=Rails.configuration.shopify_activation_url%>";
+				}
+			  
+            } else {
+				
+				if (data.code == 999) {		//token is empty
+					
+			        $.ajax({
+
+			            type: "POST",
+			            //dataType: 'json',
+			            data: customerData,
+			            beforeSend: function(jqXHR, settings) {
+			              jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+			            },
+			            url: "ajax/initialreg",
+			            success: function (data, status) {
+
+			              if (data.code == 200) {
+
+			  				if ($.is_in_frame()) {
+			  					 window.top.location.href = "<%=Rails.configuration.shopify_activation_url%>";
+			  				} else {
+			  					 window.location.href = "<%=Rails.configuration.shopify_activation_url%>";
+			  				}
+
+			              } else {
+							  
+							  if (data.code == 999) {		//token is empty, email existed
+								  
+								  sessionStorage.setItem(sessionStorageManager.AlertEmailExisted, true);
+								  window.location.href = "/<%=@order_id%>/login";
+								  
+							  } else {
+								  
+					              $button.prop('disabled', false);
+					              $.show_error("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+								  
+							  }
+			              }
+
+			            },
+			            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+			              $button.prop('disabled', false);
+			              $.show_error("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+
+			            },
+			            complete: function () {
+							$.hide_loading();
+			            }
+
+			        });
+					
+				} else {
+					
+					$button.prop('disabled', false);
+					$.hide_loading();
+	                $.show_error("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+				}
+				
+            }
+			
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+            $button.prop('disabled', false);
+			$.hide_loading();
+            $.show_error("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+
+          }
+
+        });
+
+      }
+
+    });
+	
+    
+  });
+  
+  function FilterProducts() {
+	  
+	var hidValue = $('#hidvalue').val();
+	var data = $.parseJSON(hidValue).data;
+	
+	var ids = "";
+	
+	var line_items = data.line_items;
+	for (var i = 0; i < line_items.length; i++) {
+		
+		if (i == line_items.length - 1) {
+
+			ids += line_items[i].product_id;
+			
+		} else {
+
+			ids += line_items[i].product_id + ",";
+			
+		}
+		
+	}
+	
+    $.ajax({
+		type: "POST",
+        data: {order_id: $('#hidOrderid').val(), ids: ids},
+        beforeSend: function(jqXHR, settings) {
+          jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+        },
+        url: "/ajax/getproducttype",
+        success: function (data, status) {
+		  
+          if (data.code == 200) {
+			  
+			var products = data.products;
+  	  		var hidValue = $('#hidvalue').val();
+  	  		var shopifyData = $.parseJSON(hidValue).data;
+  			var line_items = shopifyData.line_items;
+  			var hasDigitalProduct = false;
+
+  			for (var i = 0; i < line_items.length; i++) {
+
+  				for (var j = 0; j < products.length; j++) {
+
+  					if (line_items[i].product_id == products[j].id) {
+
+  						if(products[j].product_type == "Digital Membership" || products[j].product_type == "Book") {
+  							hasDigitalProduct = true;
+  						}
+
+  					}
+
+  				}
+
+  			}
+
+  			if (hasDigitalProduct) {
+
+  				$('#hidproducttypes').val(JSON.stringify(products));
+  		  		$('#btnActiveMembership').prop('disabled', false);
+				//$('#container').show();
+				
+  			} else {
+
+				$.show_error("You didn't buy any digital product.");
+				$('#container').hide();
+				
+  			}
+			  
+
+          } else {
+			  $.show_error("Unfortunately we were not able to process your request at this time, please try later.");
+          }
+		
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+          $.show_error("Unfortunately we were not able to process your request at this time, please try later.");
+
+        },
+        complete: function () {
+			$.hide_loading();
+        }
+
+    });
+	
+  }
+  
+  function Validate() {
+
+    var error = "";
+
+    var email = $.trim($("#txtEmail").val());
+    if (email.length == 0) {
+
+      if (error) error += "<br />";
+      error += "Please input your email address.";
+
+    } else {
+    	
+		if (!$.valid_email(email)) {
+			if (error) error += "<br />";
+			error += email + " is not a valid email address.";
+		}
+		
+    }
+	
+    var password = $("#txtPassword").val();
+    if (password.length == 0) {
+
+      if (error) error += "<br />";
+      error += "Please input your password.";
+
+    } else if (password.length < 6) {
+
+      if (error) error += "<br />";
+      error += "Your password must be at least 6 characters long.";
+
+    }
+
+    var confirmPassword = $("#txtConfirmPassword").val();
+    if (password != confirmPassword) {
+
+      if (error) error += "<br />";
+      error += "The passwords you entered do not match. Please try again.";
+
+    }
+
+    if (error) {
+		$.show_error(error);
+		return false;
+    }
+
+    return true;
+
+  }
+  
+</script>
+
+<style>
+
+.loading img {
+	
+	margin-top: 150px;
+	
+}
+
+</style>
+
+<div id="container">
+  <div class="login-form">
+    <p class="dialog-subheading" style="text-align: left">
+		Create your account below.
+	</p>
+	<p style="font-size: 13px; text-align: left">
+		NOTE: If you'd like to use a different email address, replace your email address below.
+	</p>
+    <div class="login-container">
+      <div class="lform dialog-form" id="sign-in-form">
+        <div id="login">
+            <div class="dialog-input-container clearfix" style="margin-top: 20px">
+              <input name="txtEmail" class="dialog-input" id="txtEmail" type="text"
+                     placeholder="Type Your Email Address" value="<%=@email%>" />
+              <label class="dialog-label" for="password">Type Your Email Address</label>
+              <i class="ico dialog-ico-email ico-email"></i>
+            </div>
+            <div class="dialog-input-container clearfix" style="margin-top: 7px; margin-bottom: 7px">
+              <input name="password" class="dialog-input" id="txtPassword" type="password" size="16"
+                     placeholder="Type Your Password" />
+              <label class="dialog-label" for="password">Type Your Password</label>
+              <i class="ico dialog-ico ico-password"></i>
+              <div class="forgot-password-container">
+                <a href="#" class="forgot-password tooltip tooltip-bottom hastip" title="Password must be at least 6 characters long.">
+                  <i class="ico dialog-ico-tooltip ico-forgot-password"></i>
+                </a>
+              </div>
+            </div>
+            <div class="dialog-input-container clearfix">
+               <input name="confirmpassword" class="dialog-input" id="txtConfirmPassword" type="password" size="16"
+                     placeholder="Confirm Your Password" />
+              <label class="dialog-label" for="login-input">Confirm Your Password</label>
+             <i class="ico dialog-ico ico-password"></i>
+            </div>
+            <div class="dialog-input-container clearfix" style="margin-top: 7px">
+              <input id="btnActiveMembership" class="dialog-btn more-left" type="button" value="Create My Account" disabled="disabled" />
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+	<input id="hidvalue" type="hidden" value="<%=@result%>" />
+	<input id="hidproducttypes" type="hidden" />
+	<input id="hidOrderid" type="hidden" value="<%=@order_id%>" />
+</div>
+
+
+

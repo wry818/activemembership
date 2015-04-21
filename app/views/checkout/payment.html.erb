@@ -1,0 +1,748 @@
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="https://js.recurly.com/v3/recurly.js"></script>
+
+<script>
+
+
+	recurly.configure({ publicKey: '<%= Recurly.js.public_key %>'});
+	
+	var state_provinces=[];
+	var country_id = "US";
+	var state_province_abbrev = "";
+	
+	state_provinces.push({id:0, name: "----- Please select a state -----", abbrev: "", country_id: "US"});
+	state_provinces.push({id:1, name: "Alabama", abbrev: "AL", country_id: "US"});
+	state_provinces.push({id:2, name: "Alaska", abbrev: "AK", country_id: "US"});
+	state_provinces.push({id:3, name: "Arizona", abbrev: "AZ", country_id: "US"});
+	state_provinces.push({id:4, name: "Arkansas", abbrev: "AR", country_id: "US"});
+	state_provinces.push({id:5, name: "California", abbrev: "CA", country_id: "US"});
+	state_provinces.push({id:6, name: "Colorado", abbrev: "CO", country_id: "US"});
+	state_provinces.push({id:7, name: "Connecticut", abbrev: "CT", country_id: "US"});
+	state_provinces.push({id:8, name: "Delaware", abbrev: "DE", country_id: "US"});
+	state_provinces.push({id:9, name: "District of Columbia", abbrev: "DC", country_id: "US"});
+	state_provinces.push({id:10, name: "Florida", abbrev: "FL", country_id: "US"});
+	state_provinces.push({id:11, name: "Georgia", abbrev: "GA", country_id: "US"});
+	state_provinces.push({id:12, name: "Hawaii", abbrev: "HI", country_id: "US"});
+	state_provinces.push({id:13, name: "Idaho", abbrev: "ID", country_id: "US"});
+	state_provinces.push({id:14, name: "Illinois", abbrev: "IL", country_id: "US"});
+	state_provinces.push({id:15, name: "Indiana", abbrev: "IN", country_id: "US"});
+	state_provinces.push({id:16, name: "Iowa", abbrev: "IA", country_id: "US"});
+	state_provinces.push({id:17, name: "Kansas", abbrev: "KS", country_id: "US"});
+	state_provinces.push({id:18, name: "Kentucky", abbrev: "KY", country_id: "US"});
+	state_provinces.push({id:19, name: "Louisiana", abbrev: "LA", country_id: "US"});
+	state_provinces.push({id:20, name: "Maine", abbrev: "ME", country_id: "US"});
+	state_provinces.push({id:21, name: "Maryland", abbrev: "MD", country_id: "US"});
+	state_provinces.push({id:22, name: "Massachusetts", abbrev: "MA", country_id: "US"});
+	state_provinces.push({id:23, name: "Michigan", abbrev: "MI", country_id: "US"});
+	state_provinces.push({id:24, name: "Minnesota", abbrev: "MN", country_id: "US"});
+	state_provinces.push({id:25, name: "Mississippi", abbrev: "MS", country_id: "US"});
+	state_provinces.push({id:26, name: "Missouri", abbrev: "MO", country_id: "US"});
+	state_provinces.push({id:27, name: "Montana", abbrev: "MT", country_id: "US"});
+	state_provinces.push({id:28, name: "Nebraska", abbrev: "NE", country_id: "US"});
+	state_provinces.push({id:29, name: "Nevada", abbrev: "NV", country_id: "US"});
+	state_provinces.push({id:30, name: "New Hampshire", abbrev: "NH", country_id: "US"});
+	state_provinces.push({id:31, name: "New Jersey", abbrev: "NJ", country_id: "US"});
+	state_provinces.push({id:32, name: "New Mexico", abbrev: "NM", country_id: "US"});
+	state_provinces.push({id:33, name: "New York", abbrev: "NY", country_id: "US"});
+	state_provinces.push({id:34, name: "North Carolina", abbrev: "NC", country_id: "US"});
+	state_provinces.push({id:35, name: "North Dakota", abbrev: "ND", country_id: "US"});
+	state_provinces.push({id:36, name: "Ohio", abbrev: "OH", country_id: "US"});
+	state_provinces.push({id:37, name: "Oklahoma", abbrev: "OK", country_id: "US"});
+	state_provinces.push({id:38, name: "Oregon", abbrev: "OR", country_id: "US"});
+	state_provinces.push({id:39, name: "Pennsylvania", abbrev: "PA", country_id: "US"});
+	state_provinces.push({id:40, name: "Rhode Island", abbrev: "RI", country_id: "US"});
+	state_provinces.push({id:41, name: "South Carolina", abbrev: "SC", country_id: "US"});
+	state_provinces.push({id:42, name: "South Dakota", abbrev: "SD", country_id: "US"});
+	state_provinces.push({id:43, name: "Tennessee", abbrev: "TN", country_id: "US"});
+	state_provinces.push({id:44, name: "Texas", abbrev: "TX", country_id: "US"});
+	state_provinces.push({id:45, name: "Utah", abbrev: "UT", country_id: "US"});
+	state_provinces.push({id:46, name: "Vermont", abbrev: "VT", country_id: "US"});
+	state_provinces.push({id:47, name: "Virginia", abbrev: "VA", country_id: "US"});
+	state_provinces.push({id:48, name: "Washington", abbrev: "WA", country_id: "US"});
+	state_provinces.push({id:49, name: "West Virginia", abbrev: "WV", country_id: "US"});
+	state_provinces.push({id:50, name: "Wisconsin", abbrev: "WI", country_id: "US"});
+	state_provinces.push({id:51, name: "Wyoming", abbrev: "WY", country_id: "US"});
+	state_provinces.push({id:52, name: "Other", abbrev: "OT", country_id: "US"});
+	state_provinces.push({id:53, name: "GUAM", abbrev: "GU", country_id: "US"});
+	state_provinces.push({id:54, name: "Armed Forces Africa (AE)", abbrev: "AE", country_id: "US"});
+	state_provinces.push({id:55, name: "Armed Forces Canada (AE)", abbrev: "AE", country_id: "US"});
+	state_provinces.push({id:56, name: "Armed Forces Europe (AE)", abbrev: "AE", country_id: "US"});
+	state_provinces.push({id:57, name: "Armed Forces Middle East (AE)", abbrev: "AE", country_id: "US"});
+	state_provinces.push({id:58, name: "Armed Forces Americas except Canada (AA)", abbrev: "AA", country_id: "US"});
+	state_provinces.push({id:59, name: "Armed Forces Pacific (AP)", abbrev: "AP", country_id: "US"});
+	state_provinces.push({id:60, name: "Puerto Rico", abbrev: "PR", country_id: "US"});
+	state_provinces.push({id:61, name: "Virgin Islands", abbrev: "VI", country_id: "US"});
+	state_provinces.push({id:0, name: "----- Please select a province -----", abbrev: "", country_id: "CA"});
+	state_provinces.push({id:62, name: "Ontario", abbrev: "ON", country_id: "CA"});
+	state_provinces.push({id:63, name: "Alberta", abbrev: "AB", country_id: "CA"});
+	state_provinces.push({id:64, name: "British Columbia", abbrev: "BC", country_id: "CA"});
+	state_provinces.push({id:65, name: "Manitoba", abbrev: "MB", country_id: "CA"});
+	state_provinces.push({id:66, name: "New Brunswick", abbrev: "NB", country_id: "CA"});
+	state_provinces.push({id:67, name: "Newfoundland and Labrador", abbrev: "NL", country_id: "CA"});
+	state_provinces.push({id:68, name: "Nova Scotia", abbrev: "NS", country_id: "CA"});
+	state_provinces.push({id:69, name: "Northwest Territories", abbrev: "NT", country_id: "CA"});
+	state_provinces.push({id:70, name: "Nunavut", abbrev: "NU", country_id: "CA"});
+	state_provinces.push({id:71, name: "Prince Edward Island", abbrev: "PE", country_id: "CA"});
+	state_provinces.push({id:72, name: "Quebec", abbrev: "QC", country_id: "CA"});
+	state_provinces.push({id:73, name: "Saskatchewan", abbrev: "SK", country_id: "CA"});
+	state_provinces.push({id:74, name: "Yukon", abbrev: "YT", country_id: "CA"});	
+	
+	$(document).ready(function () {
+
+		//$('.hastip').tooltipsy();
+
+		// var hidValue = $('#hidvalue').val();
+// 		var value = $.parseJSON(hidValue);
+//
+// 		if (value.code == 200) {
+//
+// 			$('#btnPlaceOrder').prop('disabled', false);
+// 			BindCustomer();
+// 			BindProducts();
+//
+// 		} else if (value.code == 404) {
+//
+// 			$.show_error("Product does not exist.");
+//
+// 		} else {
+//
+// 			$.show_error("Unfortunately we were not able to process your request at this time, please try later.");
+//
+// 		}
+
+		BindCustomer();
+		BindProducts();
+		bind_state_province(country_id);
+		
+		var different_billing_address = $('input:radio[name="checkout[different_billing_address]"]:checked').val();
+
+		if (different_billing_address == "true") {
+			$("#billing-address").show();
+		} else {
+			$("#billing-address").hide();
+		}
+		
+		$("#country_id").change(function(){
+			bind_state_province($(this).val());
+		});
+		
+		$('input:radio[name="checkout[different_billing_address]"]').change(function() {
+			
+			if ($(this).is(':checked') && $(this).val() == 'false') {
+				
+				$("#billing-address").hide();
+				
+			} else {
+				
+				$("#billing-address").show();
+				
+			}
+			
+		});
+			
+		$('#btnPlaceOrder').attr('disabled', false);
+		
+		$("#btnEdit").click(function (event) {
+			window.location.href = "/checkout/<%=@product_id%>/<%=@plan%>";
+		});
+		
+	    $("#btnPlaceOrder").click(function (event) {
+
+			var $button = $(this);
+			
+			if (!$("#edit_checkout_form").valid()) {
+				return false;
+			}
+			
+			var today, someday;
+			var exMonth = $("#checkout_credit_card_month").val();
+			var exYear = $("#checkout_credit_card_year").val();
+			today = new Date();
+			someday = new Date();
+			someday.setFullYear(exYear, exMonth, 1);
+			
+			if (someday < today) {
+				
+			   $("#checkout_credit_card_expire_date").closest('.field').addClass('has-error');
+			   
+			   var error = "<label id='checkout_credit_card_expire_date_error' class='error'>is invalid and has expired</label>";
+			   $(error).insertAfter($("#checkout_credit_card_expire_date"));
+			
+			   return false;
+			   
+			} else {
+				
+				var error = $("#checkout_credit_card_expire_date_error");
+				error.remove();
+				
+			}
+			
+			var different_billing_address = $('input:radio[name="checkout[different_billing_address]"]:checked').val();
+
+			if (different_billing_address == "true") {
+				
+				var geocoder = new google.maps.Geocoder();
+				var zipcode = $("#checkout_zipcode").val();
+				
+	            geocoder.geocode({ 'address': zipcode }, function (results, status) {
+			
+	                if (status == google.maps.GeocoderStatus.OK) {
+
+						var selected_province_code = $("#state_province_id").val();
+						var isvalid = false;
+						
+						for (var i = 0; i < results[0].address_components.length; i++) {
+							
+							var address_component = results[0].address_components[i];
+							
+							if (address_component.types[0] == "administrative_area_level_1") {
+								
+								if (address_component.short_name == selected_province_code) {
+									isvalid = true;
+								} else {
+									isvalid = false;
+								}
+								
+								break;
+								
+							}
+		
+						}
+						
+						if (isvalid) {
+							
+						// if (results[0].formatted_address.indexOf(selected_province_code) >= 0) {
+
+							var error = $("#zipcode_province_error");
+							error.remove();
+						
+							SubmitToRecurly();
+						
+						} else {
+					
+							$("#checkout_zipcode").closest('.field').addClass('has-error');
+					
+							var error = "<label id='zipcode_province_error' class='error'>is not valid for " + $("#state_province_id option:selected").text() + " </label>";
+							$(error).insertAfter($("#checkout_zipcode"));
+					
+						}
+
+	                } else {
+				
+						$("#checkout_zipcode").closest('.field').addClass('has-error');
+				
+						var error = "<label id='zipcode_province_error' class='error'>is not valid for " + $("#state_province_id option:selected").text() + " </label>";
+						$(error).insertAfter($("#checkout_zipcode"));
+				
+	                }
+	            });
+				
+			} else {
+				
+				SubmitToRecurly();
+				
+			}
+
+	    });
+
+	});
+	
+	function SubmitToRecurly() {
+		
+		var customerData = sessionStorage.getItem(sessionStorageManager.CustomerData);
+		var customer = $.parseJSON(customerData);
+		var different_billing_address = $('input:radio[name="checkout[different_billing_address]"]:checked').val();
+
+		if (different_billing_address == "true") {
+			
+			customer.billing_address.firstName = $("#checkout_first_name").val();
+			customer.billing_address.lastName = $("#checkout_last_name").val();
+			customer.billing_address.company = $("#checkout_company").val();
+			customer.billing_address.address1 = $("#checkout_address1").val();
+			customer.billing_address.address2 = $("#checkout_address2").val();
+			customer.billing_address.city = $("#checkout_city").val();
+			customer.billing_address.zip = $("#checkout_zipcode").val();
+			customer.billing_address.country = $("#country_id").val();
+		
+			if (customer.billing_address.country == "US") {
+				customer.billing_address.translated_country_name = "United State";
+			} else {
+				customer.billing_address.translated_country_name = "canada";
+			}
+		 
+			customer.billing_address.province_code = $("#state_province_id").val();
+			customer.billing_address.phone = $("#checkout_phone").val();
+			
+		}
+		
+		sessionStorage.setItem(sessionStorageManager.CustomerData, JSON.stringify(customer));
+		
+        $("#btnPlaceOrder").attr('disabled', true).find('span.text').text('Processing...').siblings('span.loader').show(400,function() {
+
+			var customerData = sessionStorage.getItem(sessionStorageManager.CustomerData);
+			var customer = $.parseJSON(customerData);
+
+			var billingInfo = {
+
+			  // required attributes
+			  number: $("#checkout_credit_card_number").val(),
+			  month: $("#checkout_credit_card_month").val(),
+			  year: $("#checkout_credit_card_year").val(),
+			  first_name: customer.billing_address.firstName,
+			  last_name: customer.billing_address.lastName,
+
+			  // optional attributes
+			  cvv: $("#checkout_credit_card_verification_value").val(),
+			  address1: customer.billing_address.address1,
+			  address2: customer.billing_address.address2,
+			  city: customer.billing_address.city,
+			  state: customer.billing_address.province_code,
+			  postal_code: customer.billing_address.zip,
+			  country: customer.billing_address.country
+
+			};
+
+			recurly.token(billingInfo, tokenHandler);
+
+  		});
+		
+	}
+	
+	function BindCustomer() {
+		
+		var customerData = sessionStorage.getItem(sessionStorageManager.CustomerData);
+		
+		if (customerData != null) {
+			
+			var customer = $.parseJSON(customerData);
+			
+			$(".address-email").text(customer.email);
+			$(".address-name").text(customer.shipping_address.firstName + " " + customer.shipping_address.lastName);
+			$(".address-company").text(customer.shipping_address.company);
+			$(".address-address1").text(customer.shipping_address.address1);
+			$(".address-address2").text(customer.shipping_address.address2);
+			$(".address-city").text(customer.shipping_address.city);
+			$(".address-province_code").text(customer.shipping_address.province_code);
+			$(".address-zip").text(customer.shipping_address.zip);
+			$(".address-translated_country_name").text(customer.shipping_address.translated_country_name);
+			$(".address-phone").text(customer.shipping_address.phone);
+			
+			$("#checkout_credit_card_name").val(customer.shipping_address.firstName + " " + customer.shipping_address.lastName);
+			
+		}
+		
+	}
+	
+	function BindProducts() {
+		
+		// var hidValue = $('#hidvalue').val();
+// 		var product = $.parseJSON(hidValue).data;
+// 		var variant = product.variants[0];
+// 		var images = product.images;
+		
+		var productData = sessionStorage.getItem(sessionStorageManager.ProductInfo);
+		
+		if (productData != null) {
+			
+			var product = $.parseJSON(productData);
+			
+			$(".product__info__name strong").text(product.title);
+			$(".product__info__description").text(product.description);
+			$(".product__price").text("$ " + product.price);
+			$(".line__price").text("$ " + product.price);
+			$(".payment-due__price").text("$ " + product.price);
+		
+			if (product.src != null && product.src.length > 0) {
+				$(".product__image").attr("src", product.src);
+			} else {
+				$(".product__image").hide();
+			}
+			
+			$("#hidvariant_id").val(product.variant_id);
+			
+		}
+		
+	}
+	
+	function tokenHandler (err, token) {
+		
+        if (err) {
+			
+            alert(err.fields);
+            // handle error using err.code and err.fields
+			
+        } else {
+			
+            // recurly.js has filled in the 'token' field, so now we can submit the
+            // form to your server; alternatively, you can access token.id and do
+            // any processing you wish
+
+            //alert(token.id);
+            //form.submit();
+			
+			var customerData = sessionStorage.getItem(sessionStorageManager.CustomerData);
+			var customer = $.parseJSON(customerData);
+			
+			// var hidValue = $('#hidvalue').val();
+// 			var product = $.parseJSON(hidValue).data;
+// 			var variant_id = product.variants[0].id;
+
+	        $.ajax({
+
+	            type: "POST",
+	            data: {
+    				variant_id: parseInt($("#hidvariant_id").val()),
+					email: customer.email,
+					shipping_address: {
+						first_name: customer.shipping_address.firstName,
+						last_name: customer.shipping_address.lastName,
+						address1: customer.shipping_address.address1,
+						address2: customer.shipping_address.address2,
+						phone: customer.shipping_address.phone,
+						city: customer.shipping_address.city,
+						province: customer.shipping_address.province_code,
+						country: customer.shipping_address.country,
+						zip: customer.shipping_address.zip,
+					},
+					billing_address: {
+						first_name: customer.billing_address.firstName,
+						last_name: customer.billing_address.lastName,
+						address1: customer.billing_address.address1,
+						address2: customer.billing_address.address2,
+						phone: customer.billing_address.phone,
+						city: customer.billing_address.city,
+						province: customer.billing_address.province_code,
+						country: customer.billing_address.country,
+						zip: customer.billing_address.zip,
+					},
+					token_id: token.id,
+					plan_code: '<%=@plan%>',
+					product_title: $(".product__info__name strong").text(),
+					product_description: $(".product__info__description").text()
+				},
+	            url: "/ajax/create_subscription",
+	            success: function (data, status) {
+
+	              if (data.code == 201) {
+
+	  				var creditcard = new Object();
+
+	  				creditcard.card_number = $("#checkout_credit_card_number").val().slice(-4);
+	  				creditcard.expire_date = $("#checkout_credit_card_month").val() + "/" +$("#checkout_credit_card_year").val();
+
+	  				sessionStorage.setItem(sessionStorageManager.CreditCardInfo, JSON.stringify(creditcard));
+
+	  				window.location.href = "/checkout-thankyou/" + data.message;
+
+	              } else if (data.code == 999) {
+
+					  alert(data.message);
+
+	              } else {
+
+					  alert("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+
+	              }
+
+	            },
+	            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+					alert("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+
+	            },
+	            complete: function () {
+					// $("#btnPlaceOrder").prop('disabled', false);
+					$("#btnPlaceOrder").attr('disabled', false).find('span.text').text('Place my order').siblings('span.loader').hide();
+	            }
+
+	        });
+			
+        }
+		
+	}
+	
+	function bind_state_province(country_id){
+
+		$("#state_province_id").empty();
+		
+		$(state_provinces).each(function(){
+			
+			if (this.country_id.toString() == country_id.toString())
+			{
+				var option="<option value='" + this.abbrev + "'";
+		
+				if (this.abbrev == state_province_abbrev)
+					option+=" selected";
+		
+				option+=">" + this.name + "</option>";
+			
+				$(option).appendTo($("#state_province_id"));
+			}
+			
+		});
+	
+	}
+	
+</script>
+		
+<div id="checkout" class="row">
+	<div class="col-lg-6">
+		<div id="contact-information" class="section">
+			<div class="section__header">
+				<h3>
+					Customer Information
+				</h3>
+				<a id="btnEdit" href="#" class="section__edit-link">
+					Edit
+				</a>
+			</div>
+			<div class="section__summary">
+			    <p class="address-email">
+				</p>
+			    <p class="address">
+					<span class='address-name'>
+					</span>
+					<br />
+					<span class='address-company'>
+					</span>
+					<br />
+					<span class='address-address1'>
+					</span>
+					<br />
+					<span class='address-address2'>
+					</span>
+					<br />
+					<span class='address-city'>
+					</span>, 
+					<span class='address-province_code'>
+					</span>, 
+					<span class='address-zip'>
+					</span>
+					<br />
+					<span class='address-translated_country_name'>
+					</span>
+					<br />
+					<span class='address-phone'>
+					</span>
+				</p>
+			</div>
+		</div>
+		<div id="payment" class="section step step--current">
+  		  <div class="section__header">
+  			  <h3>Billing &amp; Payment</h3>
+  		  </div>
+		  <div class="section__form">
+			  <form class="secure-form" id="edit_checkout_form" method="post">
+				  <div data-payment-subform="required">
+					  <div class="fieldset">
+						  <div class="field " data-select-gateway="10118423">
+							  <input id="checkout_payment_gateway" name="checkout[payment_gateway]" size="30" type="hidden" value="10118423" />
+							  <label class="label--full-width" for="checkout_payment_gateway_10118423">
+								  Credit card
+							  </label>
+							  <ul class="field__icon payment-methods" data-brand-icons-for-gateway="10118423">
+								  <li class="payment-method bogus selected">
+									  Recurly
+								  </li>
+							  </ul>
+						  </div>
+						  <div class="field-group field-group--has-subfields" data-subfields-for-gateway="10118423">
+							  <div class="field field--required">
+								  <label for="checkout_credit_card_number">
+									  Card number
+								  </label>
+								  <input autocomplete="off" data-autofocus="true" data-credit-card="number" data-persist="credit_card_number" data-session-storage="false" id="checkout_credit_card_number" name="checkout[credit_card][number]" placeholder="Card number" size="30" maxlength="16" type="tel" value="" x-autocomplete="cc-number" />
+								  <i class="field__icon icon icon--lock-dark has-tooltip" title="All transactions are secure and encrypted. Credit card information will never be stored.">
+									  <!-- <span class="tooltip tooltip--right-on-mobile">
+										  All transactions are secure and encrypted. Credit card information will never be stored.
+									  </span> -->
+								  </i>
+							  </div>
+							  <div class="field field--required">
+								  <label for="checkout_credit_card_name">
+									  Name on card
+								  </label>
+								  <input autocomplete="cc-name" data-persist="credit_card_name" id="checkout_credit_card_name" name="checkout[credit_card][name]" placeholder="Name on card" size="30" type="text" />
+							  </div>
+							  <div class="field field--required">
+								  <label for="checkout_credit_card_month">
+									  Expiry
+								  </label>
+								  <div id="checkout_credit_card_expire_date" class="select-group">
+									  <select data-persist="credit_card_month" id="checkout_credit_card_month" name="checkout[credit_card][month]">
+										  <option value="1">01</option>
+										  <option value="2">02</option>
+										  <option value="3">03</option>
+										  <option value="4">04</option>
+										  <option value="5">05</option>
+										  <option value="6">06</option>
+										  <option value="7">07</option>
+										  <option value="8">08</option>
+										  <option value="9">09</option>
+										  <option value="10">10</option>
+										  <option value="11">11</option>
+										  <option value="12">12</option>
+									  </select>
+									  <select data-persist="credit_card_year" id="checkout_credit_card_year" name="checkout[credit_card][year]">
+										  <option value="2015">2015</option>
+										  <option value="2016">2016</option>
+										  <option value="2017">2017</option>
+										  <option value="2018">2018</option>
+										  <option value="2019">2019</option>
+										  <option value="2020">2020</option>
+										  <option value="2021">2021</option>
+										  <option value="2022">2022</option>
+										  <option value="2023">2023</option>
+										  <option value="2024">2024</option>
+										  <option value="2025">2025</option>
+									  </select>
+								  </div>
+							  </div>
+							  <div class="field field--required">
+								  <label for="checkout_credit_card_verification_value">
+									  CVV
+									  <i class="icon icon--info has-tooltip" title="3 or 4 digit security code usually located on the back of the card.">
+										  <!-- <span class="tooltip tooltip--left-on-mobile">
+											  3 or 4 digit security code usually located on the back of the card.
+										  </span> -->
+									  </i>
+								  </label>
+								  <input autocomplete="off" data-credit-card="cvv" data-persist="credit_card_cvv" data-session-storage="false" id="checkout_credit_card_verification_value" maxlength="4" name="checkout[credit_card][verification_value]" placeholder="CVV" size="30" type="tel" />
+							  </div>
+						  </div>
+					  </div>
+					  <h5 data-billing-address>
+						  Billing address
+					  </h5>
+					  <div class="fieldset fieldset--billing-address" data-billing-address>
+						  <div class="field field--has-radio-button field--same-billing-address" data-shown-if-js>
+							  <input checked="checked" data-persist="different_billing_address_false" id="checkout_different_billing_address_false" name="checkout[different_billing_address]" type="radio" value="false" />
+							  <label class="label--full-width" for="checkout_different_billing_address_false">
+								  <p class="address">
+									  <span class='address-name'>
+									  </span>
+									  <br>
+									  <span class='address-address1'>
+									  </span>
+									  <br>
+									  <span class='address-city'>
+									  </span>, 
+									  <span class='address-province_code'>
+									  </span>, 
+									  <span class='address-zip'>
+									  </span>
+									  <br>
+									  <span class='address-translated_country_name'>
+									  </span>
+									  <br>
+									  <span class='address-phone'>
+									  </span>
+								  </p>
+							  </label>
+						  </div>
+					      <div class="field field--has-radio-button field--different-billing-address" data-shown-if-js>
+							  <input data-persist="different_billing_address_true" id="checkout_different_billing_address_true" name="checkout[different_billing_address]" type="radio" value="true" />
+							  <label class="label--full-width" for="checkout_different_billing_address_true">
+								  <small>
+									  Use a different billing address
+								  </small>
+							  </label>
+						  </div>
+						  <div class="field-group field-group--has-subfields" id="billing-address" style="display: none">
+							  <div class="field">
+								  <label for="checkout_first_name">
+									  First Name
+								  </label>
+								  <input name="checkout[first_name]" id="checkout_first_name" spellcheck="false" type="text" size="30" placeholder="First Name" />
+							  </div>
+							  <div class="field">
+								  <label for="checkout_last_name">
+									  Last Name
+								  </label>
+								  <input name="checkout[last_name]" id="checkout_last_name" spellcheck="false" type="text" size="30" placeholder="Last Name" />
+							  </div>
+							  <div class="field">
+								  <label for="checkout_company">
+									  Company
+								  </label>
+								  <input name="checkout[company]" id="checkout_company" spellcheck="false" type="text" size="30" placeholder="Company (optional)" />
+							  </div>
+							  <div class="field">
+								  <label for="checkout_address">
+									  Address
+								  </label>
+								  <input name="checkout[address]" id="checkout_address1" spellcheck="false" type="text" size="30" placeholder="Address" />
+							  </div>
+							  <div class="field">
+								  <label for="checkout_address2">
+									  Apt, suit, etc.
+								  </label>
+								  <input name="checkout[address2]" id="checkout_address2" spellcheck="false" type="text" size="30" placeholder="Apt, suit, etc. (optional)" />
+							  </div>
+							  <div class="field">
+								  <label for="checkout_city">
+									  City
+								  </label>
+								  <input name="checkout[city]" id="checkout_city" spellcheck="false" type="text" size="30" placeholder="City" />
+							  </div>
+							  <div class="field">
+								  <label for="checkout_country">
+									  Country
+								  </label>
+								  <select autocomplete="shipping country" id="country_id" name="checkout[country]" size="1">
+									  <option selected="selected" value="US">
+										  United States
+									  </option>
+									  <option disabled="disabled" value="---">
+										  ---
+									  </option>
+									  <option value="US">
+										  United States
+									  </option>
+									  <option value="CA">
+										  Canada
+									  </option>
+								  </select>
+							  </div>
+							  <div class="field">
+								  <label for="checkout_state">
+									  State
+								  </label>
+								  <select autocomplete="shipping country" id="state_province_id" name="checkout[state]" size="1">
+								  	
+								  </select>
+							  </div>
+							  <div class="field">
+								  <label for="checkout_zipcode">
+									  Zip Code
+								  </label>
+								  <input name="checkout[zipcode]" id="checkout_zipcode" spellcheck="false" type="text" size="30" placeholder="Zip Code" />
+							  </div>
+							  <div class="field">
+								  <label for="checkout_phone">
+									  Phone
+								  </label>
+								  <input name="checkout[phone]" id="checkout_phone" spellcheck="false" type="tel" size="30" placeholder="Phone" />
+							  </div>
+						  </div>
+					  </div>
+					  <div class="call-to-action call-to-action--final">
+						<!-- <input id="btnPlaceOrder" class="btn" type="button" value="Place my order" disabled="disabled" /> -->
+						<a id="btnPlaceOrder" href="javascript:void(0);" class="btn" disabled="disabled">
+							<span class="text">Place my order&nbsp;&nbsp;</span>
+							<span class="loader" style="display:none"></span>
+						</a>
+					  </div>
+				  </div>
+			  </form>
+		  </div>
+		</div>
+	</div>
+	<div class="col-lg-5 col-order-summary">
+		<%= render 'order_summary' %>
+	</div>
+</div>
+<div>
+	<input id="hidvalue" type="hidden" value="<%=@result%>" />
+	<input id="hidvariant_id" type="hidden" />
+</div>

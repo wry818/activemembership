@@ -1,0 +1,232 @@
+@font-face {
+   font-family: 'avenir_medium';
+    src: asset-url('avenir-medium.eot?#iefix');
+    src: asset-url('avenir-medium.svg#avenir_medium') format('svg'), 
+         asset-url('avenir-medium.eot?#iefix') format('embedded-opentype'),
+         asset-url('avenir-medium.woff') format('woff'),
+         asset-url('avenir-medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'avenir_heavy';
+    src: asset-url('avenir-heavy.eot');
+    src: asset-url('avenir-heavy.eot') format('embedded-opentype'),
+         asset-url('avenir-heavy.woff') format('woff'),
+         asset-url('avenir-heavy.ttf') format('truetype'),
+         asset-url('avenir-heavy.svg#Avenir85HeavyRegular') format('svg');
+}
+
+body {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	width: 100%;
+	padding: 0px;
+	margin: 0px 0px 0px 0px;
+}
+
+a {
+	transition:color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+	color: rgb(42, 157, 204); 
+	text-decoration: none; 
+	-webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+a:hover {
+	outline: 0px; 
+	color: rgb(36, 134, 174);
+}
+
+a:focus {
+	outline: 0px; 
+	color: rgb(36, 134, 174);
+}
+
+p {
+	color: #777;
+}
+
+strong {
+	color: #555;
+}
+
+small {
+	color: #999;
+}
+
+h3 {
+	color: #333;
+	font-size: 1.25em;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+h5 {
+	font-size: 0.9em;
+	letter-spacing: 0.1em;
+	margin-top: 3em;
+	margin-bottom: 1.5em;
+	text-transform: uppercase;
+}
+
+label {
+	color: #555;
+}
+
+label.error {
+    color: #ff6d6d;
+	font-size: 0.87em;
+    font-weight: normal;
+    display: block;
+	padding-top: 0px !important;
+}
+
+label small {
+	color: rgb(119, 119, 119); 
+	font-size: 1em; 
+	font-weight: normal;
+}
+
+:-ms-input-placeholder {
+	color: rgb(204, 204, 204);
+}
+
+input, select {
+	color: #777;
+}
+
+label, input[type='text'], input[type='password'], input[type='email'], input[type='tel'], select {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.navbar {
+	background-color: white;
+}
+
+.navbar-fixed-top {
+	top: 5px;
+}
+
+.alert {
+	background-color: rgb(242, 222, 222);
+	border:1px solid #ebccd1;
+	border-radius: 4px;
+	color: #a94442;
+	padding: 15px;
+	margin: 20px auto 0px auto;
+}
+
+i {
+	background-position: center; text-indent: 100%; display: inline-block; white-space: nowrap; background-repeat: no-repeat;
+}
+
+.loading {
+	//background: image-url('loading.gif') no-repeat scroll center center;
+	//background: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    height: 350px;
+    width: 100%;
+	z-index: 1000;
+	text-align: center;
+	//display: none;
+	
+	img {
+		margin-top: 100px;
+	}
+	
+}
+
+.loader {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: image-url('loading_inline.gif');
+  padding-top: 10px;
+  //&.loader-black {
+//    background: image-url('loader-black.gif');
+//  }
+//  &.alt-loader {
+//    background: image-url('alt-loader.gif');
+//  }
+}
+
+.container {
+	margin-bottom: 30px;
+}
+
+.split {
+	background-image: image-url("grey_border.png"), none;
+	background-position: center;
+	background-repeat: repeat-y;
+	background-position: center; 
+	//background-image: image-url("credit-logo.png"), none;
+//	background-repeat: no-repeat;
+//	background-size: contain;
+}
+
+.btn {
+	padding: 1.25em; 
+	border-radius: 4px; 
+	border: currentColor; 
+	transition:color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; 
+	width: 100%; 
+	text-align: center; 
+	color: white; 
+	font-weight: 500; 
+	display: inline-block; 
+	cursor: pointer; 
+	box-sizing: border-box; 
+	background-color: rgb(245, 117, 12); -moz-box-sizing: border-box; -webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.btn:hover {
+	color: white;
+	//background-color: rgb(213, 101, 9);
+}
+
+.btn:focus {
+	color: white;
+	//background-color: rgb(213, 101, 9);
+}
+
+.btn-green {
+	background-color: rgb(147, 192, 65); -moz-box-sizing: border-box; -webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.btn-green:hover {
+	color: white; 
+	background-color: rgb(138, 181, 60);
+}
+
+.btn-green:focus {
+	color: white; 
+	background-color: rgb(138, 181, 60);
+}
+
+.btn-green:disabled {
+	background-color: rgb(162, 200, 89);
+}
+
+@media all and (min-width: 600px){
+	
+	.btn {
+		padding: 1.12em 1.5em; 
+		width: auto;
+	}
+	
+	.btn--inset.btn {
+		padding: 0.9em 1em; 
+		top: 9px; 
+		right: 9px; 
+		font-size: 0.87rem;
+	}
+	
+}

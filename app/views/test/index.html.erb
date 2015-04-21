@@ -1,0 +1,245 @@
+<div style="width: 320px; margin-left: 20px">
+	<h1>
+		Api Url:
+	</h1>
+	<div style="margin-top: 10px">
+		<select id="ddlAPI" style="width: 200px">
+			<option value="http://api.entertainment.com/mobile-rs-2.2.0/resources">prod</option>
+			<option value="http://api.uat.entertainment.com/mobile-rs-2.2.0/resources">uat</option>
+			<option value="http://api.qa.entertainment.com/mobile-rs-2.2.0/resources">qa</option>
+			<option value="http://api.dev.entertainment.com/mobile-rs-2.2.0/resources">dev</option>
+		</select>
+	</div>
+</div>
+
+<table style="width: 1080px">
+	<tr>
+		<td>
+			<div style="width: 320px; margin-left: 20px; display: block">
+				<h1>
+					Test InitialReg Api
+				</h1>
+				<div style="margin-top: 10px">
+					Email:
+				</div>
+				<div style="margin-top: 10px">
+					<input id="txtEmailInitial" type="text" />
+				</div>
+				<div style="margin-top: 10px">
+					Password:
+				</div>
+				<div style="margin-top: 10px">
+					<input id="txtPasswordInitial" type="password" />
+				</div>
+				<div style="margin-top: 10px">
+					<input id="btnTestInitial" class="dialog-btn" type="button" value="Test InitialReg Api">
+				</div>
+				<div style="margin-top: 10px">
+					API Response:
+				</div>
+				<div style="margin-top: 10px">
+					<textarea id="txtResponseInitial" cols="40" rows="5" style="width: 320px; height: 320px">
+					</textarea>
+				</div>
+			</div>
+		</td>
+		<td>
+			<div style="width: 320px; margin-left: 20px; display: block">
+				<h1>
+					Test Login Api
+				</h1>
+				<div style="margin-top: 10px">
+					Email:
+				</div>
+				<div style="margin-top: 10px">
+					<input id="txtEmailLogin" type="text" />
+				</div>
+				<div style="margin-top: 10px">
+					Password:
+				</div>
+				<div style="margin-top: 10px">
+					<input id="txtPasswordLogin" type="password" />
+				</div>
+				<div style="margin-top: 10px">
+					<input id="btnTestLogin" class="dialog-btn" type="button" value="Test Login Api">
+				</div>
+				<div style="margin-top: 10px">
+					API Response:
+				</div>
+				<div style="margin-top: 10px">
+					<textarea id="txtResponseLogin" cols="40" rows="5" style="width: 320px; height: 320px">
+					</textarea>
+				</div>
+			</div>
+		</td>
+		<td style="vertical-align: top">
+			<div style="width: 320px; margin-left: 20px">
+				<h1>
+					Test Register Api
+				</h1>
+				<div style="margin-top: 10px">
+					Token:
+				</div>
+				<div style="margin-top: 10px">
+					<input id="txtToken" type="text" />
+				</div>
+				<div style="margin-top: 10px">
+					<input id="btnTestRegister" class="dialog-btn" type="button" value="Test Register Api">
+				</div>
+				<div style="margin-top: 10px">
+					API Response:
+				</div>
+				<div style="margin-top: 10px">
+					<textarea id="txtResponseRegister" cols="40" rows="5" style="width: 320px; height: 320px">
+					</textarea>
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>
+<br />
+<br />
+
+<script>
+
+$(document).ready(function () {
+	
+	$.hide_loading();
+	
+    $("#btnTestInitial").click(function (event) {
+	  	
+        var $button = $(this);
+        $button.prop('disabled', true);
+		
+  	  	var url = $("#ddlAPI").val();
+		
+        $.ajax({
+
+            type: "POST",
+            data: {url: url, eMailAddress: $("#txtEmailInitial").val(), password: $("#txtPasswordInitial").val()},
+            beforeSend: function(jqXHR, settings) {
+              jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            },
+            url: "ajax/initialreg",
+            success: function (data, status) {
+
+              $("#txtResponseInitial").text(data)
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+              $("#txtResponseInitial").text(XMLHttpRequest.responseText)
+
+            },
+            complete: function () {
+				$button.prop('disabled', false);
+            }
+
+        });
+
+    });
+	
+    $("#btnTestLogin").click(function (event) {
+	  	
+        var $button = $(this);
+        $button.prop('disabled', true);
+		
+  	  	var url = $("#ddlAPI").val();
+		
+        $.ajax({
+
+            type: "POST",
+            data: {url: url, eMailAddress: $("#txtEmailLogin").val(), password: $("#txtPasswordLogin").val()},
+            beforeSend: function(jqXHR, settings) {
+              jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            },
+            url: "ajax/login",
+            success: function (data, status) {
+
+              $("#txtResponseLogin").text(data)
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+              $("#txtResponseLogin").text(XMLHttpRequest.responseText)
+
+            },
+            complete: function () {
+				$button.prop('disabled', false);
+            }
+
+        });
+
+    });
+
+    $("#btnTestRegister").click(function (event) {
+	  	
+        var $button = $(this);
+        $button.prop('disabled', true);
+		
+  	  	var url = $("#ddlAPI").val();
+		
+        $.ajax({
+
+            type: "POST",
+            data: {url: url, token: $("#txtToken").val()},
+            beforeSend: function(jqXHR, settings) {
+              jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            },
+            url: "ajax/register",
+            success: function (data, status) {
+
+              $("#txtResponseRegister").text(data)
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+              $("#txtResponseRegister").text(XMLHttpRequest.responseText)
+
+            },
+            complete: function () {
+				$button.prop('disabled', false);
+            }
+
+        });
+
+    });
+	
+});
+
+//   $(document).ready(function () {
+//
+// 	  jQuery.ajax({
+//
+// 	      url: "//test-coupons.myshopify.com/cart.json",
+// 	      dataType: "jsonp",
+// 	      success: function( data ) {
+// 			  alert(data);
+// 	          /* Template Code here */
+// 	      },
+// 	      error: function( jxhr, status, err ) {
+// 			  alert(jxhr.responseText);
+// 	      }
+//
+// 	  });
+//
+// var data10 = "shipping_address%5Bzip%5D=48326&shipping_address%5Bcountry%5D=US&shipping_address%5Bprovince%5D=Michigan";
+//
+// jQuery.ajax({
+//   //url: "//test-coupons.myshopify.com/cart/shipping_rates.json?shipping_address%5Bzip%5D=48326&shipping_address%5Bcountry%5D=US&shipping_address%5Bprovince%5D=Michigan",
+//    url: "//test-coupons.myshopify.com/cart/shipping_rates.json",
+//    data: data10,
+//    dataType: "jsonp",
+//   contentType: "application/json; charset=utf-8",
+//     success: function( data ) {
+//         alert(data);
+//     },
+//     error: function( jxhr, status, err ) {
+//         alert("error");
+//     }
+// });
+//
+//   });
+  
+</script>
+  

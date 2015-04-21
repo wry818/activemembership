@@ -1,0 +1,137 @@
+//@font-face {
+//   font-family: 'Avenir65Medium';
+//    src: asset-url('avenir-medium.eot?#iefix');
+//    src: asset-url('avenir-medium.svg#Avenir65Medium') format('svg'),
+//         asset-url('avenir-medium.eot?#iefix') format('embedded-opentype'),
+//         asset-url('avenir-medium.woff') format('woff'),
+//         asset-url('avenir-medium.ttf') format('truetype');
+//    font-weight: normal;
+//    font-style: normal;
+//}
+
+@font-face {
+   font-family: 'avenir_medium';
+    src: asset-url('avenir-medium.eot?#iefix');
+    src: asset-url('avenir-medium.svg#avenir_medium') format('svg'), 
+         asset-url('avenir-medium.eot?#iefix') format('embedded-opentype'),
+         asset-url('avenir-medium.woff') format('woff'),
+         asset-url('avenir-medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'avenir_black';
+    src: asset-url('avenir-black.eot');
+    src: asset-url('avenir-black.eot') format('embedded-opentype'),
+         asset-url('avenir-black.woff') format('woff'),
+         asset-url('avenir-black.ttf') format('truetype'),
+         asset-url('avenir-black.svg#AvenirBlack') format('svg');
+}
+
+
+@font-face {
+    font-family: 'avenir_heavy';
+    src: asset-url('avenir-heavy.eot');
+    src: asset-url('avenir-heavy.eot') format('embedded-opentype'),
+         asset-url('avenir-heavy.woff') format('woff'),
+         asset-url('avenir-heavy.ttf') format('truetype'),
+         asset-url('avenir-heavy.svg#Avenir85HeavyRegular') format('svg');
+}
+
+@font-face {
+    font-family: 'avenir_light';
+    src: asset-url('avenir-light.eot');
+    src: asset-url('avenir-light.eot') format('embedded-opentype'),
+         asset-url('avenir-light.woff') format('woff'),
+         asset-url('avenir-light.ttf') format('truetype'),
+         asset-url('avenir-light.svg#Avenir-Light') format('svg');
+}
+
+@font-face {
+    font-family: 'avenir_roman';
+    src: asset-url('avenir-roman.eot');
+    src: asset-url('avenir-roman.eot') format('embedded-opentype'),
+         asset-url('avenir-roman.woff') format('woff'),
+         asset-url('avenir-roman.ttf') format('truetype'),
+         asset-url('avenir-roman.svg#Avenir-Regular') format('svg');
+}
+
+body {
+	width: 100%;
+	padding: 0px;
+	margin: 0px 0px 0px 0px;
+	background-color: rgba(255, 255, 255, 0);
+	//background-color: rgba(20, 70, 124, 0.9);
+}
+
+body, input {
+	font-family: 'avenir_medium',"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+span, p, h1, h2, h3, h4, h5 {
+    font-family: 'avenir_medium',"Open Sans", sans-serif;
+}
+
+.navbar {
+	background-color: white;
+}
+
+.navbar-fixed-top {
+	top: 5px;
+}
+
+.alert {
+	background-color: rgb(242, 222, 222);
+	border:1px solid #ebccd1;
+	border-radius: 4px;
+	color: #a94442;
+	padding: 15px;
+	margin: 20px auto 0px auto;
+}
+
+.loading {
+	//background: image-url('loading.gif') no-repeat scroll center center;
+	//background: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    height: 300px;
+    width: 100%;
+	z-index: 1000;
+	text-align: center;
+	display: none;
+	
+	img {
+		margin-top: 100px;
+	}
+	
+}
+
+.dialog-btn {
+	font-family: "Montserrat", "Open Sans", sans-serif;
+	background-color: rgb(245, 117, 12); 
+    padding: 12px 24px 12px 0px; 
+    //border-radius: 0px 0px 2px 2px; 
+    border: currentColor;
+    width: 100%;
+    color: rgb(255, 255, 255); 
+    font-size: 15px; 
+    display: inline-block; 
+    cursor: pointer; 
+}
+
+.dialog-btn:hover {
+	background-color: rgb(233, 111, 10);
+}
+
+.dialog-btn:focus {
+	background-color: rgb(233, 111, 10);
+}
+
+.dialog-btn:disabled {
+	background-color: rgb(241, 141, 55);
+}
+
+
+
+
+

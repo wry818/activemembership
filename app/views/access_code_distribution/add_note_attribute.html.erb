@@ -1,0 +1,291 @@
+<script>
+
+
+  $(document).ready(function () {
+	  
+      $("#btnGetCode").click(function (event) {
+		  
+	  		if (Validate()) {
+				
+				$("#access_codes").empty();
+				$.show_loading();
+				
+	            var $button = $(this);
+	            $button.prop('disabled', true);
+				$("#btnSaveCode").hide();
+				
+				var order_id = $("#txtOrderID").val();
+		
+	            $.ajax({
+
+	                type: "POST",
+	                data: {order_id: order_id},
+	                beforeSend: function(jqXHR, settings) {
+	                  jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+	                },
+	                url: "/ajax/retrieve_existing_access_code",
+	                success: function (data, status) {
+				  
+	  				  if (data.response_code == 200) {
+					  	  
+					  	var all_product_has_code = true;
+					  	var html = "";
+						var line_items = data.order_line_items;
+						
+						html += "<table class=\"table\">"
+						
+					  	for (var i = 0; i < line_items.length; i++) {
+							
+							if (line_items[i].display > 0) {
+								
+								if (line_items[i].has_code <= 0) {
+									all_product_has_code = false;
+								}
+								
+								for (var j = 0; j < line_items[i].quantity; j++) {
+									
+									html += "<tr>";
+									html += "<td>";
+									html += 	"<div>";
+									html += 		line_items[i].title;
+									html += 	"</div>";
+									html += 	"<div>";
+									html += 		line_items[i].variant_title;
+									html += 	"</div>";
+									html += "</td>";
+									html += "<td>";
+									html += 	"<div>";
+									html += 		line_items[i].type;
+									html += 	"</div>";
+									html += "</td>";
+									
+			  						var code = "No Code";
+			  						var codes = line_items[i].codes.split(';');
+				
+			  						for (var k = 0; k < codes.length; k++) {
+					
+			  							if (j == k) {
+						
+			  								if (codes[k].length > 0) {
+			  									code = codes[k];
+			  								}
+						
+			  								break;
+			  							}
+										
+			  						}
+									
+									html += "<td>";
+									html += 	"<div>";
+									html += 		code;
+									html += 	"</div>";
+									html += "</td>";
+									html += "</tr>";
+									
+								}
+								
+							}
+							
+					  	}
+						
+						html += "</table>"
+						  
+						if (!all_product_has_code)	{
+						
+							show_error("One of the products does not have a access code.");
+							$("#access_codes").html(html);
+							
+						} else {
+	  					  
+						  $("#access_codes").html(html);
+		  				  $("#btnSaveCode").show();
+						  
+						}
+					  
+	  				  } else {
+					  
+	  					  $.show_error(data.message);
+					  
+	  				  }
+				
+	                },
+	                error: function (XMLHttpRequest, textStatus, errorThrown) {
+				  
+	  				$.show_error("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+
+	                },
+	                complete: function () {
+	    				$button.prop('disabled', false);
+						$.hide_loading();
+	                }
+
+	            });
+				
+			}
+
+      });
+
+      $("#btnSaveCode").click(function (event) {
+	  	
+		if (Validate()) {
+			
+			$.show_loading();
+            var $button = $(this);
+		  
+            $button.prop('disabled', true);
+  		  	$("#btnGetCode").prop('disabled', true);
+		  
+  		  	var order_id = $("#txtOrderID").val();
+		
+            $.ajax({
+
+                type: "POST",
+                data: {order_id: order_id},
+                beforeSend: function(jqXHR, settings) {
+                  jqXHR.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                },
+                url: "/ajax/update_existing_access_code",
+                success: function (data, status) {
+				  
+  				  if (data.response_code == 200) {
+					  
+  					  alert("Update successfully!")
+					  
+  				  } else {
+					  
+  					  $.show_error(data.message);
+					  
+  				  }
+				  
+                  // $("#txtResponseInitial").text(data)
+				
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+				  
+  				$.show_error("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+
+                },
+                complete: function () {
+    				$button.prop('disabled', false);
+  					$("#btnGetCode").prop('disabled', false);
+					$.hide_loading();
+                }
+
+            });
+		}
+          
+
+      });
+	  
+  });
+  
+  function Validate() {
+
+    var error = "";
+
+    var orderID = $.trim($("#txtOrderID").val());
+    if (orderID.length == 0) {
+
+      if (error) error += "<br />";
+      error += "Order ID is required.";
+
+    } else {
+    	
+		if (!$.validate_number(orderID)) {
+			if (error) error += "<br />";
+			error += "Order ID must be numeric.";
+		}
+		
+    }
+	
+    if (error) {
+		alert(error);
+		return false;
+    }
+
+    return true;
+
+  }
+  
+</script>
+
+
+<div style="width: 640px; margin-top: 20px; margin-left: 20px">
+	<div>
+		Order ID:
+	</div>
+	<div>
+		<input id="txtOrderID" type="text" />
+	</div>
+	<!-- <div>
+		<input id="txtOrderID22" type="text" class="form-control" disabled="disabled" />
+	</div> -->
+	<div style="margin-top: 10px">
+		<input id="btnGetCode" type="button" value="Get Access Codes" class="dialog-btn" style="width: 320px">
+	</div>
+	<div id="access_codes" style="margin-top: 20px">
+	</div>
+    <!-- <table class="table">
+        <tr>
+            <td>
+				<div>
+					aaa:
+				</div>
+				<div>
+					bbb
+				</div>
+			</td>
+            <td>
+				<div>
+					aaa:
+				</div>
+				<div>
+					bbb
+				</div>
+			</td>
+            <td>
+				<div>
+					aaa:
+				</div>
+				<div>
+					bbb
+				</div>
+			</td>
+        </tr>
+        <tr>
+            <td>
+				<div>
+					aaa:
+				</div>
+				<div>
+					bbb
+				</div>
+			</td>
+            <td>
+				<div>
+					aaa:
+				</div>
+				<div>
+					bbb
+				</div>
+			</td>
+            <td>
+				<div>
+					aaa:
+				</div>
+				<div>
+					bbb
+				</div>
+			</td>
+        </tr>
+    </table> -->
+	<div style="margin-top: 10px">
+		<input id="btnSaveCode" type="button" value="Update Access Codes to Shopify" class="dialog-btn" style="width: 320px; display: none">
+	</div>
+</div>	
+	
+	
+	
+	
+	
+	

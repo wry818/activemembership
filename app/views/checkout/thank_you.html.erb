@@ -1,0 +1,366 @@
+<script>
+	$(document).ready(function () {
+	
+		//$('.hastip').tooltipsy();
+	
+		var hidValue = $('#hidvalue').val();
+		var value = $.parseJSON(hidValue);
+
+		if (value.code == 200) {
+	
+			BindOrder();
+			BindProducts();
+			BindCreditCardInfo();
+		
+		} else if (value.code == 404) {
+		
+			$.show_error("Order does not exist.");
+	
+		} else {
+	
+			$.show_error("Unfortunately we were not able to process your request at this time, please try later.");
+	
+		}
+	
+	});
+
+	function BindOrder() {
+	
+		var hidValue = $('#hidvalue').val();
+		var order = $.parseJSON(hidValue).data;
+		var variant = order.line_items[0];
+		var customer = order.customer;
+	
+		BindCustomer(customer);
+	
+		$("#order_name").text(order.name);
+		$(".customer_email").text(customer.email);
+	
+	}
+
+	function BindCustomer(customer) {
+	
+		var default_address = customer.default_address;
+	
+		$(".address-name").text(customer.first_name + " " + customer.last_name);
+		$(".address-address1").text(default_address.address1);
+		$(".address-city").text(default_address.city);
+		$(".address-province_code").text(default_address.province_code);
+		$(".address-zip").text(default_address.zip);
+		$(".address-translated_country_name").text(default_address.country_name);
+		$(".address-phone").text(default_address.phone);
+	
+	}
+	
+	function BindProducts() {
+		
+		var productData = sessionStorage.getItem(sessionStorageManager.ProductInfo);
+		
+		if (productData != null) {
+			
+			var product = $.parseJSON(productData);
+			
+			$(".product__info__name strong").text(product.title);
+			$(".product__info__description").text(product.description);
+			$(".product__price").text("$ " + product.price);
+			$(".line__price").text("$ " + product.price);
+			$(".payment-due__price").text("$ " + product.price);
+		
+			if (product.src != null && product.src.length > 0) {
+				$(".product__image").attr("src", product.src);
+			} else {
+				$(".product__image").hide();
+			}
+			
+			$(".payment-method-total").text("$ " + product.price);
+			
+		}
+		
+	}
+	
+	function BindCreditCardInfo() {
+		
+		var creditCardInfo = sessionStorage.getItem(sessionStorageManager.CreditCardInfo);
+		
+		if (creditCardInfo != null) {
+			
+			var creditCard = $.parseJSON(creditCardInfo);
+			
+			$("#creditcard_number").text(creditCard.card_number);
+			$("#creditcard_expire_date").text(creditCard.expire_date);
+			
+		}
+		
+	}
+
+</script>
+		
+<div id="checkout" class="row">
+	<div class="col-lg-6">
+		<div class="section section--thank-you">
+			<div class="icon icon--order-success svg">
+				<svg xmlns="http://www.w3.org/2000/svg" width="72px" height="72px">
+					<g fill="none" stroke="#8EC343" stroke-width="2">
+						<circle cx="36" cy="36" r="35" style="stroke-dasharray:240px, 240px; stroke-dashoffset: 480px;"></circle>
+						<path d="M17.417,37.778l9.93,9.909l25.444-25.393" style="stroke-dasharray:50px, 50px; stroke-dashoffset: 0px;"></path>
+					</g>
+				</svg>
+			</div>
+			<h3>
+				Thank you for your purchase!
+			</h3>
+			<p>A confirmation email with details on your purchase will be sent to <span class="customer_email"></span>.
+				<strong>
+					Order <span id="order_name"></span>
+				</strong>
+			</p>
+		</div>
+		<div class="section" id="additional-content">
+
+			<style>
+  
+			  #access-code-distribution-Modal
+			  {
+			    background-color: rgba(255, 255, 255, 0);
+			  }
+  
+			  #access-code-distribution-Modal .modal-header {
+			   	border-bottom-width: 0px;
+			  }
+  
+			  #access-code-distribution-Modal .close {
+			   	color: white;
+			    opacity: 1.0;
+			  }
+  
+			  #access-code-distribution-Modal .modal-content {
+			   	background-color: rgba(20, 70, 124, 0.9);
+			    border-radius: 0px;
+			  }
+
+			  #access-code-distribution-Modal .modal-dialog {
+			   	width: auto;
+			    margin-left: 0px;
+			    margin-right: 0px;
+			  }
+  
+			  #divContent
+			  {
+			    margin: 0 auto;
+			    width: 100%;
+			  }
+  
+			  #additional-content
+			  {
+			    border-top-width: 0px !important;
+			    padding-top: 0px !important;
+			    padding-bottom: 0px !important;
+    
+			  }
+  
+			  @media all and (min-width: 768px) {
+			    #divContent
+			    {
+			      width: 80%
+			    }
+			  }
+  
+			  .activate_membership_footer
+			  {
+				  font-family: "avenir_heavy";
+			    position: fixed;
+			    bottom: -1px;
+			   	left: 0px;
+			    right: 0px;
+			    text-align: center;
+			    padding-top: 15px;
+			    padding-bottom: 15px;
+			    z-index: 1000;
+			    zoom: 1;
+			    background-color: rgb(28, 64, 125);
+			    color: white;
+			    font-size: 16px;
+				cursor: pointer;
+    
+			  }
+  
+			  @media all and (min-width: 768px) {
+			    .activate_membership_footer
+			    {
+			      font-size: 26px;
+			    }
+			  }
+  
+			  #btnCloseModal {
+			     position: absolute;
+			     top: 25px;
+			   	 right: 5%;
+			  }
+  
+			  @media all and (min-width: 768px) {
+			    #btnCloseModal
+			    {
+			      right: 20%;
+			    }
+			  }
+  
+			</style>
+
+			<script type="text/javascript">    
+  
+			  $(function () {
+    
+			    var has_membership_product = false;
+        		
+				var productData = sessionStorage.getItem(sessionStorageManager.ProductInfo);
+		
+				if (productData != null) {
+			
+					var product = $.parseJSON(productData);
+					
+					if (product.type == "Book" || product.type == "Digital Membership") {
+						has_membership_product = true;
+					}
+			
+				}
+    
+			    if (has_membership_product) {
+    	
+			      	var item_count = 1;
+      
+			    	var css = "";
+			      	var web_height = 800 + item_count * 105;
+			      	var mobile_height = 870 + item_count * 180;
+      
+			    	css += "<style type='text/css'> ";
+			    	css += " #ifNewMembership { ";
+			    	css += " 	height: " + mobile_height.toString() + "px; ";
+			    	css += " } ";
+			    	css += " @media all and (min-width: 768px) { ";
+			    	css += " 	#ifNewMembership { ";
+			    	css += " 		height: " + web_height.toString() + "px; ";
+			    	css += " 	} ";
+			    	css += " } ";
+			    	css += " </style>";
+    	
+			    	$(css).appendTo("head");
+      
+			    	$( "#btnOpenModal" ).trigger( "click" );
+			    }
+  
+			    $('#btnClose').click(function (event) {
+					$('.activate_membership_footer').fadeIn();
+			    });
+    
+			    $('.activate_membership_footer').click(function (event) {
+					$('.activate_membership_footer').fadeOut();
+			      	$( "#btnOpenModal" ).trigger( "click" );
+			    });
+      
+			  });
+
+			</script>
+
+			<div class="activate_membership_footer" style="display:none">
+			  <div>
+			  	Activate Your Membership Now!
+			  	<br />
+			  	Don't Miss Out on Savings.
+			  </div>
+			  <a id="btnCloseModal" href="#">
+				  <%= image_tag "white_uparrow.png" %>
+			  </a>
+			</div>
+			<div>
+			  <button id="btnOpenModal" class="btn btn-success btn-lg btn-lg more-left" data-toggle="modal" data-target="#access-code-distribution-Modal" style="display:none">
+			    test
+			  </button>
+
+			</div>
+
+			<div class="modal fade" id="access-code-distribution-Modal" tabindex="-1" role="dialog" aria-labelledby="access-code-distribution-Modal" aria-hidden="true"  data-backdrop="static">
+			  <div class="modal-dialog modal-lg">
+			    <div class="modal-content">
+			      <div class="modal-body">
+			        <div class="modal-header">
+			        	<a href="#" id="btnClose" class="close" data-dismiss="modal" aria-label="Close">
+			              <span aria-hidden="true">&times;</span>
+			          	</a>
+			      	</div>
+			        <div id="divContent">
+			          	<iframe id="ifNewMembership" style="visibility:hidden;" onload="this.style.visibility = 'visible';" allowtransparency=¡±true¡± class="fMembership" width="100%" frameBorder="0" src="<%=request.scheme%>://<%=request.host_with_port%>/access_code_distribution/<%=@order_id%>">
+			        		<p>Your browser does not support iframes.</p>
+			      		</iframe>
+			        </div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+		<div class="section">
+			<div class="section__header">
+				<h3>
+					Shipping Address
+				</h3>
+			</div>
+			<div class="section__summary">
+				<p class="address">
+					<span class='address-name'>
+					</span>
+					<br>
+					<span class='address-address1'>
+					</span>
+					<br>
+					<span class='address-city'>
+					</span>, 
+					<span class='address-province_code'>
+					</span>, 
+					<span class='address-zip'>
+					</span>
+					<br>
+					<span class='address-translated_country_name'>
+					</span>
+					<br>
+					<span class='address-phone'>
+					</span>
+				</p>
+			</div>
+		</div>
+		<div class="section">
+			<div class="section__header">
+				<h3>
+					Payment Information
+				</h3>
+			</div>
+			<div class="section__summary">
+				<ul class="payment-summary-lst">
+					<li>
+						<i class="payment-method bogus"></i>
+						<div class="payment-method-info">
+							<strong class="payment-method-name">
+								<span class="payment-method-masked-code">
+									(**** **** **** <span id="creditcard_number"></span>)
+								</span>
+							</strong>
+							<small class="payment-method-additional-info">
+								Expires on <span id="creditcard_expire_date"></span>
+							</small>
+						</div>
+						<span class="payment-method-total">
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<br />
+		<br />
+		<br />
+	</div>
+
+	<div class="col-lg-5 col-order-summary">
+		<%= render 'order_summary' %>
+	</div>	
+<div>
+	<input id="hidvalue" type="hidden" value="<%=@result%>" />
+	<input id="hidOrderid" type="hidden" value="<%=@order_id%>" />
+</div>

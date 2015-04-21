@@ -1,0 +1,269 @@
+<script>
+
+var copy_clients = {};
+  $(document).ready(function () {
+	  
+      $.ajax({
+
+          type: "POST",
+          data: {
+			order_id: parseInt($("#hidOrderid").val())
+		  },
+          url: "/ajax/get_access_code",
+          success: function (data, status) {
+
+            if (data.response_code == 200) {
+				
+				var line_items = data.line_items; 
+				BindProducts(line_items);
+
+            } else {
+
+			  $.show_error("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+
+            }
+
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+			$.show_error("We are sorry, your request cannot be processed temporarily, please contact our customer service for help.");
+
+          },
+          complete: function () {
+			  $("#membership-loading").hide();
+          }
+
+      });
+	      
+	// var hidValue = $('#hidvalue').val();
+// 	var result = $.parseJSON(hidValue);
+//
+// 	if (result.response_code == 200) {
+//
+// 		BindProducts();
+//
+// 	} else {
+//
+// 		$.show_error("Unfortunately we were not able to process your request at this time, please try later.");
+//
+// 	}
+
+
+  });
+  
+  function BindProducts(line_items) {
+	  
+	var all_product_has_code = true;
+	
+	var productsHTML = "";
+	
+	for (var i = 0; i < line_items.length; i++) {
+		
+				if (line_items[i].display > 0) {
+					
+					if (line_items[i].has_code <= 0) {
+						all_product_has_code = false;
+					}
+					
+					for (var j = 0; j < line_items[i].quantity; j++) {
+						
+						productsHTML += "<div class=\"product\">";
+						productsHTML += 	"<div class=\"row\">";
+						productsHTML += 		"<div class=\"col-sm-6\">";
+						productsHTML += 			"<div class=\"product-info\">";
+						productsHTML += 				"<div class=\"title\">" + line_items[i].title  + "</div>";
+						productsHTML += 				"<div class=\"desc\">" + line_items[i].variant_title  + "</div>";
+						productsHTML += 			"</div>";
+						productsHTML += 		"</div>";
+						productsHTML += 		"<div class=\"col-sm-6\">";
+						productsHTML += 			"<table>";
+						productsHTML += 				"<tr>";
+						productsHTML += 					"<td class=\"access-title\">";
+						productsHTML += 						"Your Access Code";
+						productsHTML += 					"</td>";
+						productsHTML += 					"<td class=\"control\">";
+						productsHTML += 						"<div class=\"input-group\">";
+				
+						var code = "No Code";
+						var codes = line_items[i].codes.split(';');
+						
+						for (var k = 0; k < codes.length; k++) {
+							
+							if (j == k) {
+								
+								if (codes[k].length > 0) {
+									code = codes[k];
+								}
+								
+								break;
+							}
+						}
+						
+						var button_id = "copy-button" + i.toString() + j.toString();
+						
+						// productsHTML += 							"<input type=\"text\" class=\"form-control\" placeholder=\"Access Code\" aria-describedby=\"basic-addon2\" disabled=\"disabled\" value=\"" + code + "\" />";
+						productsHTML += 							"<div class=\"code-label\">" + code + "</div>";
+	
+						if (!isMobile.Any()) {
+		
+		productsHTML += 						"<span class=\"input-group-btn\"><button class=\"btn btn-copy\" type=\"button\" id=\"" + button_id + "\" data-clipboard-text=\"" + code + "\">COPY</button></span>";
+		
+						}
+						
+						productsHTML += 						"</div>";
+						productsHTML += 					"</td>";
+						productsHTML += 				"</tr>";
+						productsHTML += 			"</table>";
+						productsHTML += 		"</div>";
+						productsHTML += 	"</div>";
+						productsHTML += "</div>";
+					
+						$("#membership-products").append(productsHTML);
+						productsHTML = "";
+	
+						if (!isMobile.Any()) {
+							
+							copy_clients['client' + i] = new ZeroClipboard( document.getElementById(button_id) );
+		
+						}
+						
+					}
+						
+				}
+		
+	}
+	
+	// $("#membership-products").empty().html(productsHTML);
+	
+	if (!all_product_has_code)	{
+		$.show_error("One of the products does not have a access code, please contact our customer service for help.");
+	}
+	
+  }
+  
+</script>
+
+<style>
+
+.loading img {
+	
+	margin-top: 150px;
+	
+}
+
+</style>
+
+<div id="access_code">
+
+	<div class="container">
+	
+		<h1 class="top_title">
+			Activate your membership so you don't miss out on savings.
+		</h1>
+		<hr style="background-color: rgb(159, 179, 201); height: 2px; border: 0" />
+		<h2 style="text-align: left">
+			Your membership includes coupons on your phone and online. <span style="font-family: 'avenir_heavy';">Take advantage of additional savings when you activate your membership with the code(s) below.</span>
+		</h2>
+		<div id="membership-loading">
+			<%= image_tag "ajax-loader-blue-background.gif" %>
+		</div>
+		<div id="membership-products">
+			<!-- <div class="product">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="product-info">
+							<div class="title">
+								Inland Empire
+							</div>
+							<div class="desc">
+								2015 Entertainment Coupon Book
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<table>
+							<tr>
+								<td class="access-title">
+									Your Access Code
+								</td>
+								<td class="control">
+									<div class="input-group">
+									  <input type="text" class="form-control" placeholder="Access Code" aria-describedby="basic-addon2">
+									  <button id="copy-button" data-clipboard-text="Copy Me!" title="Click to copy me.">Copy to Clipboard</button>
+
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div> -->
+		</div>
+		<div class="note">
+			NOTE: You'll also receive an email with your access code(s) for your records.
+		</div>
+		<hr style="background-color: white; height: 1px; border: 0" />
+		<h1 class="below_title">
+			How to Activate:
+		</h1>
+		<div id="how-to-activate">
+			<div class="product">
+				<div class="row">
+					<div class="col-sm-5">
+						<div class="title">
+							From Your Phone or Tablet
+						</div>
+					</div>
+					<div class="col-sm-7">
+						<ol>
+							<li>
+								Download the Entertainment<sup>®</sup> Mobile app from the <%= image_tag "apple.png" %> <a href="https://itunes.apple.com/us/app/entertainment-book-companion/id396932969?mt=8" target="_blank">Apple App Store</a> Or <%= image_tag "android.png" %> <a href="https://play.google.com/store/apps/details?id=com.entertainment.coupons" target="_blank">Google Play Store</a>
+							</li>
+							<li>
+								Tap "Activate Membership & Sign Up."
+							</li>
+							<li>
+								Enter an access code from above.
+							</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<div class="product">
+				<div class="row">
+					<div class="col-sm-5">
+						<div class="title">
+							Desktop Computer
+						</div>
+					</div>
+					<div class="col-sm-7">
+						<ol>
+							<li>
+								Go to <a href="http://entertainment.com/getstarted" target="_blank">entertainment.com/getstarted</a>
+							</li>
+							<li>
+								Enter an access code from above.
+							</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<script>
+		  $(document).ready(function() {
+		    var clip = new ZeroClipboard($("#d_clip_button"))
+		  });
+
+		  $("#clear-test").on("click", function(){
+		    $("#fe_text").val("Copy me!");
+		    $("#testarea").val("");
+		  });
+		</script>
+	  
+	</div>
+	<div>
+		<input id="hidvalue" type="hidden" value="<%=@result%>" />
+		<input id="hidOrderid" type="hidden" value="<%=@order_id%>" />
+	</div>
+</div>
