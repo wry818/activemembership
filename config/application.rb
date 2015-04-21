@@ -52,6 +52,7 @@ config.action_dispatch.default_headers = {
     
     config.admin_email = ENV['ADMIN_EMAIL']
     
+    config.entertainment_api_url2 = "aa"
     config.entertainment_api_url = ENV['ENTERTAINMENT_API_URL']
     config.access_code = ENV['ACCESS_CODE']
     config.how_acquired = ENV['HOW_ACQUIRED']

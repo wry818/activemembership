@@ -1,9 +1,26 @@
+# development:
+#   adapter: postgresql
+#   database: activemembership_dev
+#   host: localhost
+
 development:
   adapter: postgresql
+  encoding: utf8
   database: activemembership_dev
   host: localhost
-
+  username: deployer
+  password: password
+  
 test:
   adapter: postgresql
   database: activemembership_test
   host: localhost
+  
+# production:
+#   adapter: postgresql
+#   encoding: utf8
+#   database: my_app_production
+#   pool: 5
+#   host: localhost
+#   username: my_app
+#   password: secret

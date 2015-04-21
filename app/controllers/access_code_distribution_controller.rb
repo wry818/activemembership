@@ -297,6 +297,8 @@ class AccessCodeDistributionController < ApplicationController
 
     begin
 
+      puts "aa"
+      puts Rails.configuration.entertainment_api_url2
       uri = URI(Rails.configuration.shopify_url + 'admin/orders/' + order_id + '.json?fields=line_items')
 
       Net::HTTP.start(uri.host, uri.port,
