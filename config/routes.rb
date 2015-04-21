@@ -11,7 +11,7 @@ MembershipActivation::Application.routes.draw do
   # post 'test/ajax/register', to: 'test#ajax_register_page', as: :test_ajax_register
   # get 'test/ajax/edition', to: 'test#ajax_edition', as: :test_ajax_edition
   # get 'test/ajax/metafield', to: 'test#add_metafield_orders', as: :test_add_metafield_orders
-  # get 'test/index', to: 'test#index', as: :test_index
+  get 'test/index', to: 'test#index', as: :test_index
   # get 'test/createorder', to: 'test#create_shopify_order', as: :test_create_shopify_order
   
   get 'checkout/:product_id/:plan', to: 'checkout#index', as: :checkout_index

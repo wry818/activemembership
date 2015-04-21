@@ -1,7 +1,9 @@
 class TestController < ApplicationController
   
   def index
-  
+    book_code = BookCode.first
+    @aa = book_code.code
+    
   end
   
   def ajax_initialreg_page
