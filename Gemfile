@@ -2,9 +2,9 @@ source 'http://mirrors.aliyun.com/rubygems/'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
-gem 'unicorn'
+# gem 'unicorn'
 gem 'pg'
-gem 'foreman'
+# gem 'foreman'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
