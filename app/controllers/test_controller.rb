@@ -3,7 +3,7 @@ class TestController < ApplicationController
   def index
     book_code = BookCode.first
     @aa = book_code.code
-    
+    @bb = Rails.configuration.entertainment_api_url3
   end
   
   def ajax_initialreg_page

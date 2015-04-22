@@ -33,4 +33,7 @@ MembershipActivation::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+  
+  config.entertainment_api_url3 = "horus"
+  
 end
